@@ -1,0 +1,30 @@
+{
+  "name": "indiehd/velkart",
+  "description": "An extensible shopping cart, order management, and payment processing system built upon clean-coding principles and designed for Laravel.",
+  "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3",
+  "authors": [
+    {
+      "name": "Everett M Wiley (Poppabear)",
+      "email": "servnx@gmail.com"
+    },
+    {
+      "name": "Ben Johnson (cbj4074)",
+      "email": "ben@indiehd.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "IndieHD\\Velkart\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "IndieHD\\Velkart\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^4.0"
+  }
+}
