@@ -13,8 +13,13 @@
     }
   ],
   "minimum-stability": "dev",
-  "require": {},
+  "require": {
+    "bumbummen99/shoppingcart": "^2.0"
+  },
   "autoload": {
+    "files": [
+      "helpers/String.php"
+    ],
     "psr-4": {
       "IndieHD\\Velkart\\": "src/"
     }
@@ -25,6 +30,7 @@
     }
   },
   "require-dev": {
+    "fzaninotto/faker": "^1.9@dev",
     "orchestra/testbench": "^4.0"
   }
 }
