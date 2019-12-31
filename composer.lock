@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "f5da7423973654fc672011b92b7093da",
+  "content-hash": "b174bba8c9a1230598a8231af55a3184",
   "packages": [
     {
       "name": "bumbummen99/shoppingcart",
@@ -20,16 +20,16 @@
         "reference": "18c89a495b7058d885b7ff143078ca0724c436c7",
         "shasum": ""
       },
-            "require": {
-                "illuminate/events": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0",
-                "illuminate/session": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0",
-                "illuminate/support": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^3.4",
-                "phpunit/phpunit": "~5.0||~6.0||~7.0||~8.0"
-            },
+      "require": {
+        "illuminate/events": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0",
+        "illuminate/session": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0",
+        "illuminate/support": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0"
+      },
+      "require-dev": {
+        "mockery/mockery": "^1.0",
+        "orchestra/testbench": "^3.4",
+        "phpunit/phpunit": "~5.0||~6.0||~7.0||~8.0"
+      },
             "suggest": {
                 "gloudemans/notify": "Simple flash notifications for Laravel"
             },
@@ -470,8 +470,8 @@
               "psr/http-message": "Required to allow Storage::put to accept a StreamInterface (^1.0).",
               "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^4.0).",
               "symfony/cache": "Required to PSR-6 cache bridge (^4.3.4).",
-                "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^1.2).",
-                "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
+              "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^1.2).",
+              "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
             },
             "type": "library",
             "extra": {
@@ -498,28 +498,81 @@
                     "email": "taylor@laravel.com"
                 }
             ],
-            "description": "The Laravel Framework.",
-            "homepage": "https://laravel.com",
-            "keywords": [
-                "framework",
-                "laravel"
-            ],
+          "description": "The Laravel Framework.",
+          "homepage": "https://laravel.com",
+          "keywords": [
+            "framework",
+            "laravel"
+          ],
           "time": "2019-12-27T15:41:41+00:00"
         },
+    {
+      "name": "laravel/helpers",
+      "version": "v1.1.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/laravel/helpers.git",
+        "reference": "b8eae9ddd461e89d0296f74fd069c413bf83b6fa"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/laravel/helpers/zipball/b8eae9ddd461e89d0296f74fd069c413bf83b6fa",
+        "reference": "b8eae9ddd461e89d0296f74fd069c413bf83b6fa",
+        "shasum": ""
+      },
+      "require": {
+        "illuminate/support": "~5.8.0|^6.0",
+        "php": ">=7.1.3"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^7.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0-dev"
+        }
+      },
+      "autoload": {
+        "files": [
+          "src/helpers.php"
+        ]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
         {
-            "name": "league/flysystem",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/flysystem.git",
-              "reference": "16e717db19b308517216195e9c13244839462c59"
-            },
-            "dist": {
-              "type": "zip",
-              "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/16e717db19b308517216195e9c13244839462c59",
-              "reference": "16e717db19b308517216195e9c13244839462c59",
-              "shasum": ""
-            },
+          "name": "Taylor Otwell",
+          "email": "taylor@laravel.com"
+        },
+        {
+          "name": "Dries Vints",
+          "email": "dries.vints@gmail.com"
+        }
+      ],
+      "description": "Provides backwards compatibility for helpers in the latest Laravel release.",
+      "keywords": [
+        "helpers",
+        "laravel"
+      ],
+      "time": "2019-07-30T15:25:31+00:00"
+    },
+    {
+      "name": "league/flysystem",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/thephpleague/flysystem.git",
+        "reference": "16e717db19b308517216195e9c13244839462c59"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/16e717db19b308517216195e9c13244839462c59",
+        "reference": "16e717db19b308517216195e9c13244839462c59",
+        "shasum": ""
+      },
             "require": {
                 "ext-fileinfo": "*",
                 "php": ">=5.5.9"
@@ -588,7 +641,7 @@
                 "sftp",
                 "storage"
             ],
-          "time": "2019-12-22T19:49:33+00:00"
+      "time": "2019-12-22T19:49:33+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4414,6 +4467,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+      "laravel/helpers": 20,
       "fzaninotto/faker": 20
     },
     "prefer-stable": false,

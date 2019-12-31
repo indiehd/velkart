@@ -14,12 +14,10 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "bumbummen99/shoppingcart": "^2.0"
+    "bumbummen99/shoppingcart": "^2.0",
+    "laravel/helpers": "^1.0@dev"
   },
   "autoload": {
-    "files": [
-      "helpers/String.php"
-    ],
     "psr-4": {
       "IndieHD\\Velkart\\": "src/"
     }
