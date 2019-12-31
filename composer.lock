@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "b174bba8c9a1230598a8231af55a3184",
+  "content-hash": "de205bde7eea832322fde285e6ee2338",
   "packages": [
     {
       "name": "bumbummen99/shoppingcart",
@@ -30,16 +30,16 @@
         "orchestra/testbench": "^3.4",
         "phpunit/phpunit": "~5.0||~6.0||~7.0||~8.0"
       },
-            "suggest": {
-                "gloudemans/notify": "Simple flash notifications for Laravel"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
-                    ],
-                    "aliases": {
+      "suggest": {
+        "gloudemans/notify": "Simple flash notifications for Laravel"
+      },
+      "type": "library",
+      "extra": {
+        "laravel": {
+          "providers": [
+            "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
+          ],
+          "aliases": {
                         "Cart": "Gloudemans\\Shoppingcart\\Facades\\Cart"
                     }
                 }
@@ -488,16 +488,16 @@
                     "Illuminate\\": "src/Illuminate/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Taylor Otwell",
+              "email": "taylor@laravel.com"
+            }
+          ],
           "description": "The Laravel Framework.",
           "homepage": "https://laravel.com",
           "keywords": [
@@ -573,16 +573,16 @@
         "reference": "16e717db19b308517216195e9c13244839462c59",
         "shasum": ""
       },
-            "require": {
-                "ext-fileinfo": "*",
-                "php": ">=5.5.9"
-            },
-            "conflict": {
-                "league/flysystem-sftp": "<1.0.6"
-            },
-            "require-dev": {
-                "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.10"
+      "require": {
+        "ext-fileinfo": "*",
+        "php": ">=5.5.9"
+      },
+      "conflict": {
+        "league/flysystem-sftp": "<1.0.6"
+      },
+      "require-dev": {
+        "phpspec/phpspec": "^3.4",
+        "phpunit/phpunit": "^5.7.10"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -4468,7 +4468,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
       "laravel/helpers": 20,
-      "fzaninotto/faker": 20
+      "fzaninotto/faker": 20,
+      "mockery/mockery": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
