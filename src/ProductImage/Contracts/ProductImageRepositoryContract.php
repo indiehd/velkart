@@ -2,7 +2,9 @@
 
 namespace IndieHD\Velkart\ProductImage\Contracts;
 
-interface ProductImageRepositoryContract
+use IndieHD\Velkart\Base\Contracts\BaseContract;
+
+interface ProductImageRepositoryContract extends BaseContract
 {
-    //
+
 }

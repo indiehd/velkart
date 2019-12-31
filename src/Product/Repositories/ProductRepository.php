@@ -2,47 +2,64 @@
 
 namespace IndieHD\Velkart\Product\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
+use IndieHD\Velkart\Base\Contracts\BaseContract;
+use IndieHD\Velkart\Base\Repositories\BaseRepository;
+use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Product\Product;
+use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
 
-class ProductRepository Implements ProductRepositoryContract
+class ProductRepository extends BaseRepository Implements ProductRepositoryContract
 {
+    use UploadsFiles;
+
     /**
      * @var Product
      */
-    protected $model;
+    protected $product;
+
+    /**
+     * @var ProductImageRepositoryContract
+     */
+    protected $productImage;
 
     /**
      * ProductRepository constructor.
      * @param Product $product
+     * @param ProductImageRepositoryContract $productImage
      */
-    public function __construct(Product $product)
+    public function __construct(Product $product, ProductImageRepositoryContract $productImage)
     {
-        $this->model = $product;
+        $this->product = $product;
+        $this->productImage = $productImage;
     }
 
-    /**
-     * List all the products
-     *
-     * @param string $order
-     * @param string $sort
-     * @param array $columns
-     * @return Collection
-     */
-    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection
+    public function model(): object
     {
-        return $this->model->orderBy($order, $sort)->get($columns);
+        return $this->product;
     }
 
-    /**
-     * Create a new product
-     *
-     * @param array $attributes
-     * @return Product
-     */
-    public function create(array $attributes): Product
+    public function modelClass(): string
     {
-        return $this->model->create($attributes);
+        return Product::class;
+    }
+
+    public function delete(int $id): bool
+    {
+        $model = $this->model()->find($id);
+        $model->images()->delete();
+        return $model->delete();
+    }
+
+    public function saveImages(int $productId, array $thumbnails): void
+    {
+        foreach ($thumbnails as $file) {
+            $filename = $this->storeFile($file);
+            $productImage = $this->productImage->create([
+                'product_id' => $productId,
+                'src' => $filename
+            ]);
+            $this->product->images()->save($this->productImage->model());
+        }
     }
 }
