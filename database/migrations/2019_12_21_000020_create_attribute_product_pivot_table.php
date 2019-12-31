@@ -17,6 +17,8 @@ class CreateAttributeProductPivotTable extends Migration
             $table->unsignedBigInteger('attribute_id');
             $table->unsignedBigInteger('product_id');
 
+            $table->unique(['attribute_id', 'product_id']);
+
             $table->foreign('attribute_id')->references('id')->on('attributes');
             $table->foreign('product_id')->references('id')->on('products');
         });
