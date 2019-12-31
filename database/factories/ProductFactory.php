@@ -10,7 +10,7 @@ $factory->define(Product::class, function (Faker\Generator $faker) {
     $file = UploadedFile::fake()->image('product.png', 600, 600);
 
     return [
-        'sku' => $this->faker->numberBetween(1111111, 999999),
+        'sku' => $this->faker->unique()->numberBetween(1111111, 999999),
         'name' => $product,
         'slug' => str_slug($product),
         'description' => $this->faker->paragraph,
