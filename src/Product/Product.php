@@ -10,6 +10,8 @@ use IndieHD\Velkart\ProductImage\ProductImage;
 
 class Product extends Model implements Buyable
 {
+    protected $guarded = ['id', 'sku'];
+
     /**
      * @inheritDoc
      */

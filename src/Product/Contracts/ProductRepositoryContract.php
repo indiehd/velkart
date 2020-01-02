@@ -2,12 +2,9 @@
 
 namespace IndieHD\Velkart\Product\Contracts;
 
-use Illuminate\Database\Eloquent\Collection;
-use IndieHD\Velkart\Product\Product;
+use IndieHD\Velkart\Base\Contracts\BaseRepositoryContract;
 
-interface ProductRepositoryContract
+interface ProductRepositoryContract extends BaseRepositoryContract
 {
-    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection;
-
-    public function create(array $data): Product;
+    public function saveImages(int $productId, array $thumbnails): bool;
 }
