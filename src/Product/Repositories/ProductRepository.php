@@ -66,25 +66,21 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
      */
     public function saveImages(int $productId, array $thumbnails): bool
     {
-        try {
-            $this->db->transaction(function () use ($productId, $thumbnails) {
-                foreach ($thumbnails as $file) {
-                    $filename = $this->storeFile($file);
+        $this->db->transaction(function () use ($productId, $thumbnails) {
+            foreach ($thumbnails as $file) {
+                $filename = $this->storeFile($file);
 
-                    $productImage = $this->productImage->create([
-                        'product_id' => $productId,
-                        'src' => $filename
-                    ]);
+                $productImage = $this->productImage->create([
+                    'product_id' => $productId,
+                    'src' => $filename
+                ]);
 
-                    $product = $this->model()->find($productId);
+                $product = $this->model()->find($productId);
 
-                    $product->images()->save($productImage);
-                }
-            });
+                $product->images()->save($productImage);
+            }
+        });
 
-            return true;
-        } catch (\Throwable $e) {
-            throw $e;
-        }
+        return true;
     }
 }
