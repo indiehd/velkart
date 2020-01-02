@@ -51,11 +51,20 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
         return Product::class;
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Throwable
+     */
     public function delete(int $id): bool
     {
-        $model = $this->model()->find($id);
-        $model->images()->delete();
-        return $model->delete();
+        $this->db->transaction(function () use ($id) {
+            $model = $this->model()->find($id);
+            $model->images()->delete();
+            $model->delete();
+        });
+
+        return true;
     }
 
     /**
