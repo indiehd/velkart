@@ -85,4 +85,19 @@ class ProductUnitTest extends TestCase
         $this->assertTrue($deleted);
         $this->assertDatabaseMissing('products', ['name' => $product->name]);
     }
+
+    /** @test */
+    public function it_can_save_the_thumbnails_properly()
+    {
+        $thumbnails = [
+            UploadedFile::fake()->image('cover.jpg', 600, 600),
+            UploadedFile::fake()->image('cover.jpg', 600, 600),
+            UploadedFile::fake()->image('cover.jpg', 600, 600)
+        ];
+
+        $product = factory($this->repo->modelClass())->create();
+
+        $this->assertTrue($this->repo->saveImages($product->id, $thumbnails));
+        $this->assertCount(3, $product->images);
+    }
 }

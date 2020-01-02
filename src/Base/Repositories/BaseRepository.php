@@ -2,8 +2,6 @@
 
 namespace IndieHD\Velkart\Base\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-
 abstract class BaseRepository
 {
     abstract public function model(): object;
@@ -16,9 +14,9 @@ abstract class BaseRepository
      * @param string $order
      * @param string $sort
      * @param array $columns
-     * @return array
+     * @return iterable
      */
-    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection
+    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable
     {
         return $this->model()->orderBy($order, $sort)->get($columns);
     }

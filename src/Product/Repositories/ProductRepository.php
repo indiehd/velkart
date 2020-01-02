@@ -7,6 +7,7 @@ use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Product\Product;
 use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
+use Illuminate\Database\DatabaseManager;
 
 class ProductRepository extends BaseRepository Implements ProductRepositoryContract
 {
@@ -23,14 +24,21 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
     protected $productImage;
 
     /**
+     * @var DatabaseManager
+     */
+    protected $db;
+
+    /**
      * ProductRepository constructor.
      * @param Product $product
      * @param ProductImageRepositoryContract $productImage
+     * @param DatabaseManager $db
      */
-    public function __construct(Product $product, ProductImageRepositoryContract $productImage)
+    public function __construct(Product $product, ProductImageRepositoryContract $productImage, DatabaseManager $db)
     {
         $this->product = $product;
         $this->productImage = $productImage;
+        $this->db = $db;
     }
 
     public function model(): object
@@ -50,15 +58,33 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
         return $model->delete();
     }
 
-    public function saveImages(int $productId, array $thumbnails): void
+    /**
+     * @param int $productId
+     * @param array $thumbnails
+     * @return bool
+     * @throws \Throwable
+     */
+    public function saveImages(int $productId, array $thumbnails): bool
     {
-        foreach ($thumbnails as $file) {
-            $filename = $this->storeFile($file);
-            $productImage = $this->productImage->create([
-                'product_id' => $productId,
-                'src' => $filename
-            ]);
-            $this->product->images()->save($this->productImage->model());
+        try {
+            $this->db->transaction(function () use ($productId, $thumbnails) {
+                foreach ($thumbnails as $file) {
+                    $filename = $this->storeFile($file);
+
+                    $productImage = $this->productImage->create([
+                        'product_id' => $productId,
+                        'src' => $filename
+                    ]);
+
+                    $product = $this->model()->find($productId);
+
+                    $product->images()->save($productImage);
+                }
+            });
+
+            return true;
+        } catch (\Throwable $e) {
+            throw $e;
         }
     }
 }

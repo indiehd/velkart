@@ -2,11 +2,9 @@
 
 namespace IndieHD\Velkart\Base\Contracts;
 
-use Illuminate\Database\Eloquent\Collection;
-
 interface BaseRepositoryContract
 {
-    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection;
+    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable;
 
     public function create(array $attributes): object;
 
