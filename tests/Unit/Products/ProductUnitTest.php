@@ -18,7 +18,7 @@ class ProductUnitTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_product()
+    public function itCanCreateAProduct()
     {
         $product = 'Samsung Galaxy S10';
 
@@ -47,7 +47,7 @@ class ProductUnitTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_all_the_products()
+    public function itCanListAllTheProducts()
     {
         $products = factory($this->repo->modelClass(), 3)->create();
         $attributes = $products->first()->getFillable();
@@ -64,7 +64,7 @@ class ProductUnitTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_a_product()
+    public function itCanUpdateAProduct()
     {
         $created = factory($this->repo->modelClass())->create();
 
@@ -78,7 +78,7 @@ class ProductUnitTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_a_product()
+    public function itCanDeleteAProduct()
     {
         $product = factory($this->repo->modelClass())->create();
         $deleted = $this->repo->delete($product->id);
@@ -87,7 +87,7 @@ class ProductUnitTest extends TestCase
     }
 
     /** @test */
-    public function it_can_save_the_thumbnails_properly()
+    public function itCanSaveTheThumbnailsProperly()
     {
         $thumbnails = [
             UploadedFile::fake()->image('cover.jpg', 600, 600),
