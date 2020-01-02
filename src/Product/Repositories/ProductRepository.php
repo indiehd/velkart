@@ -2,7 +2,6 @@
 
 namespace IndieHD\Velkart\Product\Repositories;
 
-use IndieHD\Velkart\Base\Contracts\BaseContract;
 use IndieHD\Velkart\Base\Repositories\BaseRepository;
 use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;

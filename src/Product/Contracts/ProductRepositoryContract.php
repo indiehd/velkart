@@ -2,9 +2,9 @@
 
 namespace IndieHD\Velkart\Product\Contracts;
 
-use IndieHD\Velkart\Base\Contracts\BaseContract;
+use IndieHD\Velkart\Base\Contracts\BaseRepositoryContract;
 
-interface ProductRepositoryContract extends BaseContract
+interface ProductRepositoryContract extends BaseRepositoryContract
 {
     public function saveImages(int $productId, array $thumbnails): void;
 }

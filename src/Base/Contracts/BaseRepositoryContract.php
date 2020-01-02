@@ -4,7 +4,7 @@ namespace IndieHD\Velkart\Base\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
 
-interface BaseContract
+interface BaseRepositoryContract
 {
     public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection;
 
