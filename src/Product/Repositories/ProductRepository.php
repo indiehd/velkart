@@ -2,47 +2,94 @@
 
 namespace IndieHD\Velkart\Product\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
+use IndieHD\Velkart\Base\Repositories\BaseRepository;
+use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Product\Product;
+use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
+use Illuminate\Database\DatabaseManager;
 
-class ProductRepository Implements ProductRepositoryContract
+class ProductRepository extends BaseRepository Implements ProductRepositoryContract
 {
+    use UploadsFiles;
+
     /**
      * @var Product
      */
-    protected $model;
+    protected $product;
+
+    /**
+     * @var ProductImageRepositoryContract
+     */
+    protected $productImage;
+
+    /**
+     * @var DatabaseManager
+     */
+    protected $db;
 
     /**
      * ProductRepository constructor.
      * @param Product $product
+     * @param ProductImageRepositoryContract $productImage
+     * @param DatabaseManager $db
      */
-    public function __construct(Product $product)
+    public function __construct(Product $product, ProductImageRepositoryContract $productImage, DatabaseManager $db)
     {
-        $this->model = $product;
+        $this->product = $product;
+        $this->productImage = $productImage;
+        $this->db = $db;
+    }
+
+    public function model(): object
+    {
+        return $this->product;
+    }
+
+    public function modelClass(): string
+    {
+        return Product::class;
     }
 
     /**
-     * List all the products
-     *
-     * @param string $order
-     * @param string $sort
-     * @param array $columns
-     * @return Collection
+     * @param int $id
+     * @return bool
+     * @throws \Throwable
      */
-    public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): Collection
+    public function delete(int $id): bool
     {
-        return $this->model->orderBy($order, $sort)->get($columns);
+        $this->db->transaction(function () use ($id) {
+            $model = $this->model()->find($id);
+            $model->images()->delete();
+            $model->delete();
+        });
+
+        return true;
     }
 
     /**
-     * Create a new product
-     *
-     * @param array $attributes
-     * @return Product
+     * @param int $productId
+     * @param array $thumbnails
+     * @return bool
+     * @throws \Throwable
      */
-    public function create(array $attributes): Product
+    public function saveImages(int $productId, array $thumbnails): bool
     {
-        return $this->model->create($attributes);
+        $this->db->transaction(function () use ($productId, $thumbnails) {
+            foreach ($thumbnails as $file) {
+                $filename = $this->storeFile($file);
+
+                $productImage = $this->productImage->create([
+                    'product_id' => $productId,
+                    'src' => $filename
+                ]);
+
+                $product = $this->model()->find($productId);
+
+                $product->images()->save($productImage);
+            }
+        });
+
+        return true;
     }
 }
