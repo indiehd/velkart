@@ -53,15 +53,18 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
 
     public function update(int $id, array $attributes): bool
     {
-        $model = $this->model()->find($id);
-        $oldFile = $model->src;
-
         $this->db->beginTransaction();
 
-        if ($model->update($attributes)) {
-            if ($this->filesystem->disk('public')->delete($oldFile)) {
-                $this->db->commit();
-                return true;
+        $model = $this->model()->find($id);
+
+        if ($model) {
+            $oldFile = $model->src;
+
+            if ($model->update($attributes)) {
+                if ($this->filesystem->disk('public')->delete($oldFile)) {
+                    $this->db->commit();
+                    return true;
+                }
             }
         }
 
@@ -71,15 +74,16 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
 
     public function delete(int $id): bool
     {
+        $this->db->beginTransaction();
 
         $model = $this->model()->find($id);
 
-        $this->db->beginTransaction();
-
-        if ($model->delete()) {
-            if ($this->filesystem->disk('public')->delete($model->src)) {
-                $this->db->commit();
-                return true;
+        if ($model) {
+            if ($model->delete()) {
+                if ($this->filesystem->disk('public')->delete($model->src)) {
+                    $this->db->commit();
+                    return true;
+                }
             }
         }
 

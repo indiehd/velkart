@@ -3,6 +3,7 @@
 namespace Tests\Unit\Products;
 
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
 use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
@@ -24,24 +25,44 @@ class ProductImageTest extends TestCase
         $this->filesystem = resolve(FilesystemContract::class);
     }
 
-    /** @test */
-    public function itCanCreateAProductImageAndStoreImageOnDisk()
+    private function createProductImage($params = null): object
     {
-        $productImage = factory($this->repo->modelClass())->create();
+        if ($params === null)
+            $params = factory($this->repo->modelClass())->make()->toArray();
 
-        $this->assertInstanceOf($this->repo->modelClass(), $productImage);
-        $this->assertCount(1, $this->repo->list());
-        $this->assertDatabaseHas('product_images', ['src' => $productImage->src]);
+        return $this->repo->create($params);
+    }
+
+    /** @test */
+    public function itCanCreateAProductImage()
+    {
+        $this->assertDatabaseHas('product_images', ['src' => $this->createProductImage()->src]);
+    }
+
+    /** @test */
+    public function itCanSaveImageToDiskDuringCreation()
+    {
+        $productImage = $this->createProductImage();
 
         $exists = $this->filesystem->disk('public')->exists($productImage->src);
         $this->assertTrue($exists, 'The product image does NOT exist');
     }
 
     /** @test */
-    public function itCanUpdateAProductImageAndRemovesOldImageFromDisk()
+    public function itThrowsAQueryExceptionWhenGivenAnInvalidProductId()
     {
-        $productImage = factory($this->repo->modelClass())->create();
-        $oldFile = $productImage->src;
+        $this->expectException(QueryException::class);
+
+        $this->createProductImage([
+            'product_id' => 5,
+            'src' => 'somerandomstring'
+        ]);
+    }
+
+    /** @test */
+    public function itCanUpdateAProductImage()
+    {
+        $productImage = $this->createProductImage();
 
         $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
         $newFile = $this->storeFile($newImage);
@@ -50,24 +71,78 @@ class ProductImageTest extends TestCase
             'src' => $newFile
         ]);
 
-        $oldFileExists = $this->filesystem->disk('public')->exists($oldFile);
-
         $this->assertTrue($updated, 'ProductImage did NOT update');
         $this->assertDatabaseHas('product_images', ['src' => $newFile]);
-        $this->assertDatabaseMissing('product_images', ['src' => $oldFile]);
+    }
+
+    /** @test */
+    public function itRemovesOldImageFromDiskWhenUpdatingImage()
+    {
+        $productImage = $this->createProductImage();
+        $oldFile = $productImage->src;
+
+        $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
+        $newFile = $this->storeFile($newImage);
+
+        $this->repo->update($productImage->id, [
+            'src' => $newFile
+        ]);
+
+        $oldFileExists = $this->filesystem->disk('public')->exists($oldFile);
+
         $this->assertFalse($oldFileExists, 'ProductImage old file STILL exists');
     }
 
     /** @test */
-    public function itCanDeleteAProductImageAndDeleteImageFromDisk()
+    public function itCanFailUpdatingAProductImage()
     {
-        $productImage = factory($this->repo->modelClass())->create();
+        $updated = $this->repo->update(5, [
+            'src' => 'somerandomstring'
+        ]);
 
-        $this->assertDatabaseHas('product_images', ['src' => $productImage->src]);
-        $this->assertTrue($this->repo->delete($productImage->id));
+        $this->assertFalse($updated, 'ProductImage DID update');
+    }
+
+    /** @test */
+    public function itRollsBackDatabaseAfterFailingToUpdateAProductImage()
+    {
+        $updated = $this->repo->update(5, [
+            'src' => 'somerandomstring'
+        ]);
+
+        $this->assertFalse($updated, 'ProductImage DID update');
+        $this->assertDatabaseMissing('product_images', ['src' => 'somerandomstring']);
+    }
+
+    /** @test */
+    public function itCanDeleteAProductImage()
+    {
+        $productImage = $this->createProductImage();
+        $deleted = $this->repo->delete($productImage->id);
+
+        $this->assertTrue($deleted);
         $this->assertDatabaseMissing('product_images', ['src' => $productImage->src]);
+    }
+
+    /** @test */
+    public function itRemovesImageFromDiskWhenDeletingAProductImage()
+    {
+        $productImage = $this->createProductImage();
+        $this->repo->delete($productImage->id);
 
         $exists = $this->filesystem->disk('public')->exists($productImage->src);
         $this->assertFalse($exists, 'The product image still exists');
+    }
+
+    /** @test */
+    public function itCanFailDeletingAProductImage()
+    {
+        $this->assertFalse($this->repo->delete(5), 'ProductImage DID delete');
+    }
+
+    /** @test */
+    public function itBelongsToAProduct()
+    {
+        $this->assertEquals(1, $this->createProductImage()->product->id);
     }
 }
