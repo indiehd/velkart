@@ -27,8 +27,9 @@ class ProductImageTest extends TestCase
 
     private function createProductImage($params = null): object
     {
-        if ($params === null)
+        if ($params === null) {
             $params = factory($this->repo->modelClass())->make()->toArray();
+        }
 
         return $this->repo->create($params);
     }
