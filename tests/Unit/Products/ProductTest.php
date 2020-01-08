@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
 
-class ProductUnitTest extends TestCase
+class ProductTest extends TestCase
 {
     protected $repo;
 
