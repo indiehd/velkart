@@ -130,6 +130,8 @@ class ProductImageTest extends TestCase
     /** @test */
     public function itBelongsToAProduct()
     {
-        $this->assertEquals(1, $this->createProductImage()->product->id);
+        $productImage = $this->createProductImage();
+
+        $this->assertNotNull($productImage->product);
     }
 }
