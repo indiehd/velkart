@@ -38,9 +38,5 @@ abstract class BaseRepository
         return $model->update($attributes);
     }
 
-    public function delete(int $id): bool
-    {
-        $model = $this->model()->find($id);
-        return $model->delete();
-    }
+    abstract public function delete(int $id): bool;
 }
