@@ -6,7 +6,6 @@ use IndieHD\Velkart\Base\Repositories\BaseRepository;
 use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Product\Product;
-use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
 use Illuminate\Database\DatabaseManager;
 
 class ProductRepository extends BaseRepository Implements ProductRepositoryContract
