@@ -19,11 +19,6 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
     protected $product;
 
     /**
-     * @var ProductImageRepositoryContract
-     */
-    protected $productImage;
-
-    /**
      * @var DatabaseManager
      */
     protected $db;
@@ -31,13 +26,11 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
     /**
      * ProductRepository constructor.
      * @param Product $product
-     * @param ProductImageRepositoryContract $productImage
      * @param DatabaseManager $db
      */
-    public function __construct(Product $product, ProductImageRepositoryContract $productImage, DatabaseManager $db)
+    public function __construct(Product $product, DatabaseManager $db)
     {
         $this->product = $product;
-        $this->productImage = $productImage;
         $this->db = $db;
     }
 
@@ -62,32 +55,6 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
             $model = $this->model()->find($id);
             $model->images()->delete();
             $model->delete();
-        });
-
-        return true;
-    }
-
-    /**
-     * @param int $productId
-     * @param array $thumbnails
-     * @return bool
-     * @throws \Throwable
-     */
-    public function saveImages(int $productId, array $thumbnails): bool
-    {
-        $this->db->transaction(function () use ($productId, $thumbnails) {
-            foreach ($thumbnails as $file) {
-                $filename = $this->storeFile($file);
-
-                $productImage = $this->productImage->create([
-                    'product_id' => $productId,
-                    'src' => $filename
-                ]);
-
-                $product = $this->model()->find($productId);
-
-                $product->images()->save($productImage);
-            }
         });
 
         return true;
