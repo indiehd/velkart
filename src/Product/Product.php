@@ -13,7 +13,7 @@ class Product extends Model implements Buyable
 {
     use CanBeBought;
 
-    protected $guarded = ['id', 'sku'];
+    protected $guarded = ['id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -32,10 +32,10 @@ class Product extends Model implements Buyable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function attributes()
     {
-        return $this->hasMany(Attribute::class);
+        return $this->belongsToMany(Attribute::class);
     }
 }
