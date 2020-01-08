@@ -64,15 +64,12 @@ class ProductImageTest extends TestCase
     {
         $productImage = $this->createProductImage();
 
-        $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
-        $newFile = $this->storeFile($newImage);
-
         $updated = $this->repo->update($productImage->id, [
-            'src' => $newFile
+            'src' => "productImage.jpg"
         ]);
 
         $this->assertTrue($updated, 'ProductImage did NOT update');
-        $this->assertDatabaseHas('product_images', ['src' => $newFile]);
+        $this->assertDatabaseHas('product_images', ['src' => 'productImage.jpg']);
     }
 
     /** @test */
