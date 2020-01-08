@@ -17,87 +17,79 @@ class ProductTest extends TestCase
         $this->repo = resolve(ProductRepositoryContract::class);
     }
 
+    private function createProduct($params = null): object
+    {
+        if ($params === null)
+            $params = factory($this->repo->modelClass())->make()->toArray();
+
+        return $this->repo->create($params);
+    }
+
+    private function createProducts(int $count = 3): iterable
+    {
+        return factory($this->repo->modelClass(), $count)->create();
+    }
+
     /** @test */
     public function itCanCreateAProduct()
     {
-        $product = 'Samsung Galaxy S10';
+        $product = $this->createProduct();
 
-        $params = [
-            'sku' => $this->faker->unique()->numberBetween(1111111, 999999),
-            'name' => $product,
-            'slug' => str_slug($product),
-            'description' => $this->faker->paragraph,
-            'cover' => UploadedFile::fake()->image('product.png', 600, 600),
-            'quantity' => 10,
-            'price' => 9.95,
-            'status' => 1,
-        ];
-
-        $created = factory($this->repo->modelClass())->create($params);
-
-        $this->assertInstanceOf($this->repo->modelClass(), $created);
-        $this->assertEquals($params['sku'], $created->sku);
-        $this->assertEquals($params['name'], $created->name);
-        $this->assertEquals($params['slug'], $created->slug);
-        $this->assertEquals($params['description'], $created->description);
-        $this->assertEquals($params['cover'], $created->cover);
-        $this->assertEquals($params['quantity'], $created->quantity);
-        $this->assertEquals($params['price'], $created->price);
-        $this->assertEquals($params['status'], $created->status);
+        $this->assertNotNull($product, 'Product IS null');
     }
 
     /** @test */
     public function itCanListAllTheProducts()
     {
-        $products = factory($this->repo->modelClass(), 3)->create();
-        $attributes = $products->first()->getFillable();
+        $this->createProducts();
 
-        $list = $this->repo->list();
-
-        $this->assertCount(3, $list);
-
-        $list->each(function ($product, $key) use ($attributes) {
-            foreach ($product->getFillable() as $key => $value) {
-                $this->assertArrayHasKey($key, $attributes);
-            }
-        });
+        $this->assertCount(3, $this->repo->list());
     }
 
     /** @test */
     public function itCanUpdateAProduct()
     {
-        $created = factory($this->repo->modelClass())->create();
+        $product = $this->createProduct();
 
-        $updated = $this->repo->update($created->id, [
+        $updated = $this->repo->update($product->id, [
             'price' => 799.99
         ]);
 
-        $this->assertTrue($updated);
-        $product = $this->repo->model()->find($created->id);
-        $this->assertEquals(799.99, $product->price);
+        $this->assertTrue($updated, 'Product did NOT update');
+        $this->assertDatabaseHas('products', ['price' => 799.99]);
     }
 
     /** @test */
     public function itCanDeleteAProduct()
     {
-        $product = factory($this->repo->modelClass())->create();
+        $product = $this->createProduct();
         $deleted = $this->repo->delete($product->id);
-        $this->assertTrue($deleted);
+
+        $this->assertTrue($deleted, 'Product did NOT delete');
         $this->assertDatabaseMissing('products', ['name' => $product->name]);
     }
 
     /** @test */
-    public function itCanSaveTheThumbnailsProperly()
+    public function itHasManyImages()
     {
-        $thumbnails = [
-            UploadedFile::fake()->image('cover.jpg', 600, 600),
-            UploadedFile::fake()->image('cover.jpg', 600, 600),
-            UploadedFile::fake()->image('cover.jpg', 600, 600)
-        ];
+        $product = $this->createProduct();
 
-        $product = factory($this->repo->modelClass())->create();
+        $this->assertNotNull($product->images);
+    }
 
-        $this->assertTrue($this->repo->saveImages($product->id, $thumbnails));
-        $this->assertCount(3, $product->images);
+    /** @test */
+    public function itHasManyCategories()
+    {
+        $product = $this->createProduct();
+
+        $this->assertNotNull($product->categories);
+    }
+
+    /** @test */
+    public function itHasManyAttributes()
+    {
+        $product = $this->createProduct();
+
+        $this->assertNotNull($product->attributes);
     }
 }
