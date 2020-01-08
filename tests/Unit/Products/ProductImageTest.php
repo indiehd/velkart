@@ -122,7 +122,7 @@ class ProductImageTest extends TestCase
     }
 
     /** @test */
-    public function itCanFailDeletingAProductImage()
+    public function itFailsToDeleteWhenProductImageIdIsInvalid()
     {
         $this->assertFalse($this->repo->delete(5), 'ProductImage DID delete');
     }
