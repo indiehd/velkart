@@ -102,17 +102,6 @@ class ProductImageTest extends TestCase
     }
 
     /** @test */
-    public function itRollsBackDatabaseAfterFailingToUpdateAProductImage()
-    {
-        $updated = $this->repo->update(5, [
-            'src' => 'somerandomstring'
-        ]);
-
-        $this->assertFalse($updated, 'ProductImage DID update');
-        $this->assertDatabaseMissing('product_images', ['src' => 'somerandomstring']);
-    }
-
-    /** @test */
     public function itCanDeleteAProductImage()
     {
         $productImage = $this->createProductImage();
