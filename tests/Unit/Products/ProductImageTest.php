@@ -91,13 +91,14 @@ class ProductImageTest extends TestCase
     }
 
     /** @test */
-    public function itCanFailUpdatingAProductImage()
+    public function itFailsToUpdateWhenProductImageIdIsInvalid()
     {
         $updated = $this->repo->update(5, [
-            'src' => 'somerandomstring'
+            'src' => 'productImage.jpg'
         ]);
 
         $this->assertFalse($updated, 'ProductImage DID update');
+        $this->assertDatabaseMissing('product_images', ['src' => 'productImage.jpg']);
     }
 
     /** @test */
