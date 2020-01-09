@@ -1,11 +1,12 @@
 <?php
 
 use IndieHD\Velkart\Models\Eloquent\Category;
+use Illuminate\Support\Str;
 
 $factory->define(Category::class, function (Faker\Generator $faker) {
 
     $name = $faker->unique()->words(3, true);
-    $slug = str_slug($name);
+    $slug = Str::slug($name);
 
     return [
         'name' => $name,

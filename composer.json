@@ -14,8 +14,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "bumbummen99/shoppingcart": "^2.0",
-    "laravel/helpers": "^1.0@dev"
+    "bumbummen99/shoppingcart": "^2.0"
   },
   "autoload": {
     "psr-4": {
