@@ -1,6 +1,6 @@
 <?php
 
-use IndieHD\Velkart\Product\Product;
+use IndieHD\Velkart\Models\Eloquent\Product;
 use Illuminate\Http\UploadedFile;
 
 $factory->define(Product::class, function (Faker\Generator $faker) {
