@@ -2,6 +2,7 @@
 
 use IndieHD\Velkart\Models\Eloquent\Product;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 $factory->define(Product::class, function (Faker\Generator $faker) {
 
@@ -10,7 +11,7 @@ $factory->define(Product::class, function (Faker\Generator $faker) {
     return [
         'sku' => $this->faker->unique()->numberBetween(1111111, 999999),
         'name' => $product,
-        'slug' => str_slug($product),
+        'slug' => Str::slug($product),
         'description' => $this->faker->paragraph,
         'cover' => UploadedFile::fake()->image('product.png', 600, 600),
         'quantity' => 10,
