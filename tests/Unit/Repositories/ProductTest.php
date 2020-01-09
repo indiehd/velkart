@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Products;
+namespace Tests\Unit\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
