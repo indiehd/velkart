@@ -2,6 +2,7 @@
 
 namespace IndieHD\Velkart\Product\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
 use IndieHD\Velkart\Base\Repositories\BaseRepository;
 use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
@@ -33,7 +34,7 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
         $this->db = $db;
     }
 
-    public function model(): object
+    public function model(): Model
     {
         return $this->product;
     }

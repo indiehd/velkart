@@ -2,11 +2,12 @@
 
 namespace IndieHD\Velkart\Base\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class BaseRepository
 {
-    abstract public function model(): object;
+    abstract public function model(): Model;
 
     abstract public function modelClass(): string;
 

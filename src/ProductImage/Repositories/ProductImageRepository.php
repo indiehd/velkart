@@ -4,6 +4,7 @@ namespace IndieHD\Velkart\ProductImage\Repositories;
 
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\Model;
 use IndieHD\Velkart\Base\Repositories\BaseRepository;
 use IndieHD\Velkart\Base\Traits\UploadsFiles;
 use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
@@ -41,7 +42,7 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
         $this->db = $db;
     }
 
-    public function model(): object
+    public function model(): Model
     {
         return $this->productImage;
     }
