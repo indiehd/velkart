@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Products;
+namespace Tests\Unit\Repositories;
 
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\QueryException;
