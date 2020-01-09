@@ -2,6 +2,8 @@
 
 namespace IndieHD\Velkart\Base\Repositories;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 abstract class BaseRepository
 {
     abstract public function model(): object;
@@ -19,6 +21,18 @@ abstract class BaseRepository
     public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable
     {
         return $this->model()->orderBy($order, $sort)->get($columns);
+    }
+
+    /**
+     * Finds a record by its id
+     *
+     * @param int $id
+     * @return object
+     * @throws ModelNotFoundException
+     */
+    public function findById(int $id): object
+    {
+        return $this->model()->findOrFail($id);
     }
 
     /**
