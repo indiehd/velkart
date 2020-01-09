@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Products;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\UploadedFile;
 use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
@@ -45,6 +46,22 @@ class ProductTest extends TestCase
         $this->createProducts();
 
         $this->assertCount(3, $this->repo->list());
+    }
+
+    /** @test */
+    public function itCanFindAProductByItsId()
+    {
+        $product = $this->createProduct();
+
+        $this->assertNotNull($this->repo->findById($product->id));
+    }
+
+    /** @test */
+    public function itThrowsModelNotFoundExceptionWithInvalidProductId()
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $this->repo->findById(999);
     }
 
     /** @test */
