@@ -48,6 +48,34 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function itCanListProductsByIdInAscendingOrder()
+    {
+        $products = $this->createProducts();
+
+        $ids = $products->sortBy('id')->pluck('id');
+
+        $this->assertEquals($ids, $this->repo->list('id', 'asc')->pluck('id'));
+    }
+
+    /** @test */
+    public function itCanListProductsByIdInDescendingOrder()
+    {
+        $products = $this->createProducts();
+
+        $ids = $products->sortByDesc('id')->pluck('id');
+
+        $this->assertEquals($ids, $this->repo->list('id', 'desc')->pluck('id'));
+    }
+
+    /** @test */
+    public function itFailsWhenSortOrderInvalid()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->repo->list('id', 'foo');
+    }
+
+    /** @test */
     public function itCanFindAProductByItsId()
     {
         $product = $this->createProduct();
