@@ -1,6 +1,6 @@
 <?php
 
-use IndieHD\Velkart\Category\Category;
+use IndieHD\Velkart\Models\Eloquent\Category;
 
 $factory->define(Category::class, function (Faker\Generator $faker) {
 

@@ -3,10 +3,10 @@
 namespace IndieHD\Velkart;
 
 use Illuminate\Support\ServiceProvider;
-use IndieHD\Velkart\Product\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Product\Repositories\ProductRepository;
-use IndieHD\Velkart\ProductImage\Contracts\ProductImageRepositoryContract;
-use IndieHD\Velkart\ProductImage\Repositories\ProductImageRepository;
+use IndieHD\Velkart\Contracts\ProductRepositoryContract;
+use IndieHD\Velkart\Repositories\Eloquent\ProductRepository;
+use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
+use IndieHD\Velkart\Repositories\Eloquent\ProductImageRepository;
 
 class VelkartServiceProvider extends ServiceProvider
 {
