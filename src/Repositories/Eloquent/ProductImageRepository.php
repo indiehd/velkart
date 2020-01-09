@@ -55,13 +55,13 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
     {
         $this->db->beginTransaction();
 
-        $model = $this->model()->find($id);
+        $model = $this->model()->lockForUpdate()->find($id);
 
         if ($model) {
-            $oldFile = $model->src;
+            [$origDisk, $origPath] = [$model->disk, $model->path];
 
             if ($model->update($attributes)) {
-                if ($this->filesystem->disk('public')->delete($oldFile)) {
+                if ($this->filesystem->disk($origDisk)->delete($origPath)) {
                     $this->db->commit();
                     return true;
                 }
@@ -80,7 +80,7 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
 
         if ($model) {
             if ($model->delete()) {
-                if ($this->filesystem->disk('public')->delete($model->src)) {
+                if ($this->filesystem->disk($model->disk)->delete($model->path)) {
                     $this->db->commit();
                     return true;
                 }
