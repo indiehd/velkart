@@ -3,6 +3,7 @@
 namespace IndieHD\Velkart\Models\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProductImage extends Model
 {
@@ -10,7 +11,10 @@ class ProductImage extends Model
 
     protected $guarded = ['id'];
 
-    public function product()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

@@ -11,7 +11,8 @@ $factory->define(ProductImage::class, function (Faker\Generator $faker) {
 
     return [
         'product_id' => $product->id,
-        'src' => $file->store('products', ['disk' => 'public'])
+        'disk' => 'public',
+        'path' => $file->store('products', ['disk' => 'public'])
     ];
 
 });

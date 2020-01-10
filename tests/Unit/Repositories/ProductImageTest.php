@@ -47,7 +47,7 @@ class ProductImageTest extends TestCase
     {
         $productImage = $this->createProductImage();
 
-        $exists = $this->filesystem->disk('public')->exists($productImage->src);
+        $exists = $this->filesystem->disk('public')->exists($productImage->path);
         $this->assertTrue($exists, 'The product image does NOT exist');
     }
 
@@ -68,24 +68,28 @@ class ProductImageTest extends TestCase
         $productImage = $this->createProductImage();
 
         $updated = $this->repo->update($productImage->id, [
-            'src' => "productImage.jpg"
+            'disk' => 'public',
+            'path' => 'productImage.jpg',
         ]);
 
         $this->assertTrue($updated, 'ProductImage did NOT update');
-        $this->assertDatabaseHas('product_images', ['src' => 'productImage.jpg']);
+        $this->assertDatabaseHas('product_images', [
+            'disk' => 'public',
+            'path' => 'productImage.jpg',
+        ]);
     }
 
     /** @test */
     public function itRemovesOldImageFromDiskWhenUpdatingImage()
     {
         $productImage = $this->createProductImage();
-        $oldFile = $productImage->src;
+        $oldFile = $productImage->path;
 
         $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
-        $newFile = $this->storeFile($newImage);
+        $newPath = $this->storeFile($newImage);
 
         $this->repo->update($productImage->id, [
-            'src' => $newFile
+            'path' => $newPath
         ]);
 
         $oldFileExists = $this->filesystem->disk('public')->exists($oldFile);
@@ -111,7 +115,7 @@ class ProductImageTest extends TestCase
         $deleted = $this->repo->delete($productImage->id);
 
         $this->assertTrue($deleted);
-        $this->assertDatabaseMissing('product_images', ['src' => $productImage->src]);
+        $this->assertDatabaseMissing('product_images', ['path' => $productImage->path]);
     }
 
     /** @test */
