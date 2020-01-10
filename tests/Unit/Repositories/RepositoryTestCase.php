@@ -34,11 +34,7 @@ abstract class RepositoryTestCase extends TestCase
     /** @test */
     public function itCanListAllTheModels()
     {
-        $n = 3;
-
-        $this->createMany($n);
-
-        $this->assertCount($n, $this->repo->list());
+        $this->assertCount($this->createMany()->count(), $this->repo->list());
     }
 
     /** @test */
@@ -85,7 +81,8 @@ abstract class RepositoryTestCase extends TestCase
         $this->repo->list('id', 'foo');
     }
 
-    public function itCanCallListWithoutArguments()
+    /** @test */
+    public function itCanCallListWithoutArgumentsAndOrderMatchesDefault()
     {
         $models = $this->createMany();
 
