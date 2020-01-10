@@ -80,7 +80,9 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
             $model = $this->findById($id);
 
             if ($model->delete()) {
-                $this->filesystem->disk($model->disk)->delete($model->path);
+                if (!$this->filesystem->disk($model->disk)->delete($model->path)) {
+                    throw new \Exception("Product image $id at $model->path not deleted from $model->disk");
+                }
             }
 
         } catch (\Exception $e) {
