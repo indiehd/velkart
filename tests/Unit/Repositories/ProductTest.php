@@ -2,71 +2,28 @@
 
 namespace Tests\Unit\Repositories;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
+use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Tests\TestCase;
+use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
 
-class ProductTest extends TestCase
+class ProductTest extends RepositoryTestCase
 {
-    protected $repo;
+    protected $productImage;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->repo = resolve(ProductRepositoryContract::class);
-    }
 
-    private function createProduct($params = null): object
-    {
-        if ($params === null) {
-            $params = factory($this->repo->modelClass())->make()->toArray();
-        }
-
-        return $this->repo->create($params);
-    }
-
-    private function createProducts(int $count = 3): iterable
-    {
-        return factory($this->repo->modelClass(), $count)->create();
-    }
-
-    /** @test */
-    public function itCanCreateAProduct()
-    {
-        $product = $this->createProduct();
-
-        $this->assertNotNull($product, 'Product IS null');
-    }
-
-    /** @test */
-    public function itCanListAllTheProducts()
-    {
-        $this->createProducts();
-
-        $this->assertCount(3, $this->repo->list());
-    }
-
-    /** @test */
-    public function itCanFindAProductByItsId()
-    {
-        $product = $this->createProduct();
-
-        $this->assertNotNull($this->repo->findById($product->id));
-    }
-
-    /** @test */
-    public function itThrowsModelNotFoundExceptionWithInvalidProductId()
-    {
-        $this->expectException(ModelNotFoundException::class);
-
-        $this->repo->findById(999);
+        $this->productImage = resolve(ProductImageRepositoryContract::class);
     }
 
     /** @test */
     public function itCanUpdateAProduct()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $updated = $this->repo->update($product->id, [
             'price' => 799.99
@@ -77,27 +34,26 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function itCanDeleteAProduct()
-    {
-        $product = $this->createProduct();
-        $deleted = $this->repo->delete($product->id);
-
-        $this->assertTrue($deleted, 'Product did NOT delete');
-        $this->assertDatabaseMissing('products', ['name' => $product->name]);
-    }
-
-    /** @test */
     public function itHasManyImages()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
-        $this->assertNotNull($product->images);
+        $images = factory($this->productImage->modelClass(), 2)->make();
+
+        $product->images()->saveMany($images);
+
+        $this->assertInstanceOf(Collection::class, $product->images);
+
+        $this->assertInstanceOf(
+            $this->productImage->modelClass(),
+            $product->images->first()
+        );
     }
 
     /** @test */
     public function itHasManyCategories()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($product->categories);
     }
@@ -105,7 +61,7 @@ class ProductTest extends TestCase
     /** @test */
     public function itHasManyAttributes()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($product->attributes);
     }
