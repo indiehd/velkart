@@ -4,12 +4,10 @@ namespace Tests\Unit\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Tests\TestCase;
+use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
 
-class ProductTest extends TestCase
+class ProductTest extends RepositoryTestCase
 {
-    protected $repo;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -17,24 +15,10 @@ class ProductTest extends TestCase
         $this->repo = resolve(ProductRepositoryContract::class);
     }
 
-    private function createProduct($params = null): object
-    {
-        if ($params === null) {
-            $params = factory($this->repo->modelClass())->make()->toArray();
-        }
-
-        return $this->repo->create($params);
-    }
-
-    private function createProducts(int $count = 3): iterable
-    {
-        return factory($this->repo->modelClass(), $count)->create();
-    }
-
     /** @test */
     public function itCanCreateAProduct()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($product, 'Product IS null');
     }
@@ -42,43 +26,17 @@ class ProductTest extends TestCase
     /** @test */
     public function itCanListAllTheProducts()
     {
-        $this->createProducts();
+        $n = 3;
 
-        $this->assertCount(3, $this->repo->list());
-    }
+        $this->createMany($n);
 
-    /** @test */
-    public function itCanListProductsByIdInAscendingOrder()
-    {
-        $products = $this->createProducts();
-
-        $ids = $products->sortBy('id')->pluck('id');
-
-        $this->assertEquals($ids, $this->repo->list('id', 'asc')->pluck('id'));
-    }
-
-    /** @test */
-    public function itCanListProductsByIdInDescendingOrder()
-    {
-        $products = $this->createProducts();
-
-        $ids = $products->sortByDesc('id')->pluck('id');
-
-        $this->assertEquals($ids, $this->repo->list('id', 'desc')->pluck('id'));
-    }
-
-    /** @test */
-    public function itFailsWhenSortOrderInvalid()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $this->repo->list('id', 'foo');
+        $this->assertCount($n, $this->repo->list());
     }
 
     /** @test */
     public function itCanFindAProductByItsId()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($this->repo->findById($product->id));
     }
@@ -94,7 +52,7 @@ class ProductTest extends TestCase
     /** @test */
     public function itCanUpdateAProduct()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $updated = $this->repo->update($product->id, [
             'price' => 799.99
@@ -107,7 +65,7 @@ class ProductTest extends TestCase
     /** @test */
     public function itCanDeleteAProduct()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
         $deleted = $this->repo->delete($product->id);
 
         $this->assertTrue($deleted, 'Product did NOT delete');
@@ -117,7 +75,7 @@ class ProductTest extends TestCase
     /** @test */
     public function itHasManyImages()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($product->images);
     }
@@ -125,7 +83,7 @@ class ProductTest extends TestCase
     /** @test */
     public function itHasManyCategories()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($product->categories);
     }
@@ -133,7 +91,7 @@ class ProductTest extends TestCase
     /** @test */
     public function itHasManyAttributes()
     {
-        $product = $this->createProduct();
+        $product = $this->create();
 
         $this->assertNotNull($product->attributes);
     }
