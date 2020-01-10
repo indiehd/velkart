@@ -50,12 +50,18 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
      */
     public function delete(int $id): bool
     {
-        $this->db->transaction(function () use ($id) {
+        $this->db->beginTransaction();
+
+        try {
             $model = $this->findById($id);
             $model->images()->delete();
             $model->delete();
-        });
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            return false;
+        }
 
+        $this->db->commit();
         return true;
     }
 }

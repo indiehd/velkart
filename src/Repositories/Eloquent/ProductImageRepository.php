@@ -76,18 +76,19 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
     {
         $this->db->beginTransaction();
 
-        $model = $this->model()->find($id);
+        try {
+            $model = $this->findById($id);
 
-        if ($model) {
             if ($model->delete()) {
-                if ($this->filesystem->disk($model->disk)->delete($model->path)) {
-                    $this->db->commit();
-                    return true;
-                }
+                $this->filesystem->disk($model->disk)->delete($model->path);
             }
+
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            return false;
         }
 
-        $this->db->rollBack();
-        return false;
+        $this->db->commit();
+        return true;
     }
 }

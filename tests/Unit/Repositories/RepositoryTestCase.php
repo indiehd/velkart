@@ -104,4 +104,10 @@ abstract class RepositoryTestCase extends TestCase
             ['name' => $model->name]
         );
     }
+
+    /** @test */
+    public function itFailsToDeleteModelWhenModelIdIsInvalid()
+    {
+        $this->assertFalse($this->repo->delete(5), 'Model DID delete');
+    }
 }

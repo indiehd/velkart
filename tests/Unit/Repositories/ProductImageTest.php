@@ -5,15 +5,13 @@ namespace Tests\Unit\Repositories;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
+use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
 use IndieHD\Velkart\Traits\UploadsFiles;
 use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
-use IndieHD\Velkart\Tests\TestCase;
 
-class ProductImageTest extends TestCase
+class ProductImageTest extends RepositoryTestCase
 {
     use UploadsFiles;
-
-    protected $repo;
 
     protected $filesystem;
 
@@ -25,27 +23,10 @@ class ProductImageTest extends TestCase
         $this->filesystem = resolve(FilesystemContract::class);
     }
 
-    private function createProductImage($params = null): object
-    {
-        if ($params === null) {
-            $params = factory($this->repo->modelClass())->make()->toArray();
-        }
-
-        return $this->repo->create($params);
-    }
-
-    /** @test */
-    public function itCanCreateAProductImage()
-    {
-        $productImage = $this->createProductImage();
-
-        $this->assertNotNull($productImage);
-    }
-
     /** @test */
     public function itCanSaveImageToDiskDuringCreation()
     {
-        $productImage = $this->createProductImage();
+        $productImage = $this->create();
 
         $exists = $this->filesystem->disk('public')->exists($productImage->path);
         $this->assertTrue($exists, 'The product image does NOT exist');
@@ -56,7 +37,7 @@ class ProductImageTest extends TestCase
     {
         $this->expectException(QueryException::class);
 
-        $this->createProductImage([
+        $this->create([
             'product_id' => 5,
             'src' => 'somerandomstring'
         ]);
@@ -65,7 +46,7 @@ class ProductImageTest extends TestCase
     /** @test */
     public function itCanUpdateAProductImage()
     {
-        $productImage = $this->createProductImage();
+        $productImage = $this->create();
 
         $updated = $this->repo->update($productImage->id, [
             'disk' => 'public',
@@ -82,7 +63,7 @@ class ProductImageTest extends TestCase
     /** @test */
     public function itRemovesOldImageFromDiskWhenUpdatingImage()
     {
-        $productImage = $this->createProductImage();
+        $productImage = $this->create();
         $oldFile = $productImage->path;
 
         $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
@@ -108,10 +89,9 @@ class ProductImageTest extends TestCase
         $this->assertDatabaseMissing('product_images', ['src' => 'productImage.jpg']);
     }
 
-    /** @test */
     public function itCanDeleteAProductImage()
     {
-        $productImage = $this->createProductImage();
+        $productImage = $this->create();
         $deleted = $this->repo->delete($productImage->id);
 
         $this->assertTrue($deleted);
@@ -121,7 +101,7 @@ class ProductImageTest extends TestCase
     /** @test */
     public function itRemovesImageFromDiskWhenDeletingAProductImage()
     {
-        $productImage = $this->createProductImage();
+        $productImage = $this->create();
         $this->repo->delete($productImage->id);
 
         $exists = $this->filesystem->disk('public')->exists($productImage->src);
@@ -137,7 +117,7 @@ class ProductImageTest extends TestCase
     /** @test */
     public function itBelongsToAProduct()
     {
-        $productImage = $this->createProductImage();
+        $productImage = $this->create();
 
         $this->assertNotNull($productImage->product);
     }
