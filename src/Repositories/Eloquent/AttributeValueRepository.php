@@ -13,16 +13,26 @@ class AttributeValueRepository extends BaseRepository implements AttributeValueR
      */
     protected $attributeValue;
 
+    /**
+     * AttributeValueRepository constructor.
+     * @param AttributeValue $attributeValue
+     */
     public function __construct(AttributeValue $attributeValue)
     {
         $this->attributeValue = $attributeValue;
     }
 
+    /**
+     * @return Model
+     */
     public function model(): Model
     {
         return $this->attributeValue;
     }
 
+    /**
+     * @return string
+     */
     public function modelClass(): string
     {
         return AttributeValue::class;

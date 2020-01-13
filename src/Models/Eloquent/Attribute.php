@@ -11,6 +11,9 @@ class Attribute extends Model
 
     protected $guarded = ['id'];
 
+    /**
+     * @return HasMany
+     */
     public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class);

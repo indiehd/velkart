@@ -13,16 +13,26 @@ class AttributeRepository extends BaseRepository implements AttributeRepositoryC
      */
     protected $attribute;
 
+    /**
+     * AttributeRepository constructor.
+     * @param Attribute $attribute
+     */
     public function __construct(Attribute $attribute)
     {
         $this->attribute = $attribute;
     }
 
+    /**
+     * @return Model
+     */
     public function model(): Model
     {
         return $this->attribute;
     }
 
+    /**
+     * @return string
+     */
     public function modelClass(): string
     {
         return Attribute::class;

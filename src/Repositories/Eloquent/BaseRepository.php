@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class BaseRepository
 {
+    /**
+     * @return Model
+     */
     abstract public function model(): Model;
 
+    /**
+     * @return string
+     */
     abstract public function modelClass(): string;
 
     /**
@@ -47,12 +53,25 @@ abstract class BaseRepository
         return $this->model()->create($attributes);
     }
 
+    /**
+     * Updates a record
+     *
+     * @param int $id
+     * @param array $attributes
+     * @return bool
+     */
     public function update(int $id, array $attributes): bool
     {
         $model = $this->model()->find($id);
         return $model->update($attributes);
     }
 
+    /**
+     * Deletes a record
+     *
+     * @param int $id
+     * @return bool
+     */
     public function delete(int $id): bool
     {
         try {
