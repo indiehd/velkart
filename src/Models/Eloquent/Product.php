@@ -15,7 +15,7 @@ class Product extends Model implements Buyable
     protected $guarded = ['id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function images(): HasMany
     {
@@ -25,7 +25,7 @@ class Product extends Model implements Buyable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {
@@ -33,7 +33,7 @@ class Product extends Model implements Buyable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function attributes(): BelongsToMany
     {
