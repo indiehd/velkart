@@ -53,5 +53,14 @@ abstract class BaseRepository
         return $model->update($attributes);
     }
 
-    abstract public function delete(int $id): bool;
+    public function delete(int $id): bool
+    {
+        try {
+            $this->findById($id)->delete();
+        } catch (ModelNotFoundException $e) {
+            return false;
+        }
+
+        return true;
+    }
 }
