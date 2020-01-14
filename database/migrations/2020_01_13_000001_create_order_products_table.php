@@ -14,10 +14,10 @@ class CreateOrderProductsTable extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id')->index();
+            $table->unsignedBigInteger('product_id')->index();
+
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->unsignedBigInteger('product_id')->unsigned()->index();
             $table->foreign('product_id')->references('id')->on('products');
         });
     }

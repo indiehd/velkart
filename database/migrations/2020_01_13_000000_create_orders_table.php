@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOrdersTable extends Migration
 {
@@ -17,7 +17,6 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('reference')->unique()->index();
             //$table->unsignedInteger('courier_id')->index();
-            //$table->foreign('courier_id')->references('id')->on('couriers');
             $table->unsignedBigInteger('customer_id')->index()->nullable();
 
             if (Schema::hasTable(config('user_table'))) {
@@ -26,16 +25,11 @@ class CreateOrdersTable extends Migration
             }
 
             $table->unsignedBigInteger('address_id')->index()->nullable();
-            //$table->foreign('address_id')->references('id')->on('addresses');
             //$table->unsignedInteger('order_status_id')->index();
+
+            //$table->foreign('courier_id')->references('id')->on('couriers');
+            //$table->foreign('address_id')->references('id')->on('addresses');
             //$table->foreign('order_status_id')->references('id')->on('order_statuses');
-            #$table->string('payment');
-            #$table->decimal('discounts')->default(0.00);
-            #$table->decimal('total_products');
-            #$table->decimal('tax')->default(0.00);
-            #$table->decimal('total');
-            #$table->decimal('total_paid')->default(0.00);
-            #$table->string('invoice')->nullable();
             $table->timestamps();
         });
     }
