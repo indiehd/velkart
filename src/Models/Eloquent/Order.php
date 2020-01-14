@@ -3,16 +3,17 @@
 namespace IndieHD\Velkart\Models\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-#use IndieHD\Velkart\Models\Eloquent\Product;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
     protected $guarded = ['id'];
 
-    /*
-    public function products()
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class);
     }
-    */
 }

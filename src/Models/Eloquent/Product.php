@@ -2,11 +2,11 @@
 
 namespace IndieHD\Velkart\Models\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\CanBeBought;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model implements Buyable
 {
@@ -27,10 +27,12 @@ class Product extends Model implements Buyable
     /**
      * @return BelongsToMany
      */
+    /*
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
+    */
 
     /**
      * @return BelongsToMany
@@ -38,5 +40,13 @@ class Product extends Model implements Buyable
     public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(Attribute::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class);
     }
 }
