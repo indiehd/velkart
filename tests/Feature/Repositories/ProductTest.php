@@ -18,7 +18,7 @@ class ProductTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->repo = resolve(ProductRepositoryContract::class);
+        $this->setRepository(resolve(ProductRepositoryContract::class));
 
         $this->productImage = resolve(ProductImageRepositoryContract::class);
         //$this->productCategory = resolve(CategoryRepositoryContract::class);

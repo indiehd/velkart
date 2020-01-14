@@ -18,7 +18,7 @@ class ProductImageTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->repo = resolve(ProductImageRepositoryContract::class);
+        $this->setRepository(resolve(ProductImageRepositoryContract::class));
         $this->filesystem = resolve(FilesystemContract::class);
     }
 

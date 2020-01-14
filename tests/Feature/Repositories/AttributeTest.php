@@ -14,7 +14,7 @@ class AttributeTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->repo = resolve(AttributeRepositoryContract::class);
+        $this->setRepository(resolve(AttributeRepositoryContract::class));
         $this->attributeValue = resolve(AttributeValueRepositoryContract::class);
     }
 
