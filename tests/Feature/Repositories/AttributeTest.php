@@ -19,7 +19,7 @@ class AttributeTest extends RepositoryTestCase
     }
 
     /** @test */
-    public function itCanUpdateAnAttribute()
+    public function itCanUpdate()
     {
         $attribute = $this->create();
 

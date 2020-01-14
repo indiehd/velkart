@@ -20,7 +20,7 @@ class OrderRepositoryTest extends RepositoryTestCase
     }
 
     /** @test */
-    public function itCanUpdateAnOrder()
+    public function itCanUpdate()
     {
         $order = factory($this->getRepository()->modelClass())->create();
 
