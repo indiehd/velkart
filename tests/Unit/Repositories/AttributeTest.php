@@ -24,12 +24,12 @@ class AttributeTest extends RepositoryTestCase
     {
         $attribute = $this->create();
 
-        $updated = $this->repo->update($attribute->id, [
+        $updated = $this->getRepository()->update($attribute->id, [
             'name' => 'attribute'
         ]);
 
         $this->assertTrue($updated, 'Attribute did NOT update');
-        $this->assertDatabaseHas($this->repo->model()->getTable(), ['name' => 'attribute']);
+        $this->assertDatabaseHas($this->getRepository()->model()->getTable(), ['name' => 'attribute']);
     }
 
     /** @test */

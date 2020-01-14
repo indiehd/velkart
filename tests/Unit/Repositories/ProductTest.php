@@ -1,15 +1,20 @@
 <?php
 
-namespace Tests\Unit\Repositories;
+namespace IndieHD\Velkart\Tests\Unit\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
+use IndieHD\Velkart\Contracts\AttributeRepositoryContract;
+use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
+
+//use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
 
 class ProductTest extends RepositoryTestCase
 {
     protected $productImage;
+    protected $attribute;
+    protected $order;
 
     public function setUp(): void
     {
@@ -18,6 +23,9 @@ class ProductTest extends RepositoryTestCase
         $this->repo = resolve(ProductRepositoryContract::class);
 
         $this->productImage = resolve(ProductImageRepositoryContract::class);
+        //$this->productCategory = resolve(CategoryRepositoryContract::class);
+        $this->attribute = resolve(AttributeRepositoryContract::class);
+        $this->order = resolve(OrderRepositoryContract::class);
     }
 
     /** @test */
@@ -25,7 +33,7 @@ class ProductTest extends RepositoryTestCase
     {
         $product = $this->create();
 
-        $updated = $this->repo->update($product->id, [
+        $updated = $this->getRepository()->update($product->id, [
             'price' => 799.99
         ]);
 
@@ -51,18 +59,52 @@ class ProductTest extends RepositoryTestCase
     }
 
     /** @test */
+    /*
     public function itHasManyCategories()
     {
         $product = $this->create();
 
-        $this->assertNotNull($product->categories);
+        $this->assertInstanceOf(Collection::class, $product->categories);
+
+        $this->assertInstanceOf(
+            $this->productCategory->modelClass(),
+            $product->categories->first()
+        );
     }
+    */
 
     /** @test */
     public function itHasManyAttributes()
     {
         $product = $this->create();
 
-        $this->assertNotNull($product->attributes);
+        $attributes = factory($this->attribute->modelClass(), 2)->create();
+
+        $product->attributes()->saveMany($attributes);
+
+        $this->assertInstanceOf(Collection::class, $product->attributes);
+
+        $this->assertInstanceOf(
+            $this->attribute->modelClass(),
+            $product->attributes->first()
+        );
+    }
+
+    /** @test */
+    public function itHasManyOrders()
+    {
+        $product = $this->create();
+
+        $orders = factory($this->order->modelClass(), 2)->create();
+
+        $product->orders()->save($orders->shift());
+        $product->orders()->save($orders->shift());
+
+        $this->assertInstanceOf(Collection::class, $product->orders);
+
+        $this->assertInstanceOf(
+            $this->order->modelClass(),
+            $product->orders->first()
+        );
     }
 }

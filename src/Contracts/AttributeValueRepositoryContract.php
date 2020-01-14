@@ -2,7 +2,7 @@
 
 namespace IndieHD\Velkart\Contracts;
 
-interface AttributeValueRepositoryContract
+interface AttributeValueRepositoryContract extends BaseRepositoryContract
 {
     //
 }
