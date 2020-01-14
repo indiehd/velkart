@@ -27,7 +27,7 @@ class ProductTest extends RepositoryTestCase
     }
 
     /** @test */
-    public function itCanUpdateAProduct()
+    public function itCanUpdate()
     {
         $product = $this->create();
 

@@ -29,8 +29,13 @@ abstract class RepositoryTestCase extends TestCase
         return factory($this->getRepository()->modelClass(), $count)->create();
     }
 
+    /**
+     * This method should be implemented by all repository tests as a @test
+     */
+    abstract public function itCanUpdate();
+
     /** @test */
-    public function itCanCreateAModel()
+    public function itCanCreate()
     {
         $model = $this->create();
 
@@ -98,7 +103,7 @@ abstract class RepositoryTestCase extends TestCase
     }
 
     /** @test */
-    public function itCanDeleteAModel()
+    public function itCanDelete()
     {
         $model = $this->create();
         $deleted = $this->getRepository()->delete($model->id);

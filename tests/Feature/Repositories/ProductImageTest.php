@@ -43,7 +43,7 @@ class ProductImageTest extends RepositoryTestCase
     }
 
     /** @test */
-    public function itCanUpdateAProductImage()
+    public function itCanUpdate()
     {
         $productImage = $this->create();
 
@@ -86,15 +86,6 @@ class ProductImageTest extends RepositoryTestCase
 
         $this->assertFalse($updated, 'ProductImage DID update');
         $this->assertDatabaseMissing('product_images', ['src' => 'productImage.jpg']);
-    }
-
-    public function itCanDeleteAProductImage()
-    {
-        $productImage = $this->create();
-        $deleted = $this->repo->delete($productImage->id);
-
-        $this->assertTrue($deleted);
-        $this->assertDatabaseMissing('product_images', ['path' => $productImage->path]);
     }
 
     /** @test */
