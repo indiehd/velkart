@@ -39,23 +39,4 @@ class OrderRepository extends BaseRepository implements OrderRepositoryContract
     {
         return $this->order;
     }
-
-    public function delete(int $id): bool
-    {
-        $this->db->beginTransaction();
-
-        try {
-            $model = $this->findById($id);
-
-            $model->delete();
-        } catch (\Exception $e) {
-            $this->db->rollBack();
-
-            return false;
-        }
-
-        $this->db->commit();
-
-        return true;
-    }
 }
