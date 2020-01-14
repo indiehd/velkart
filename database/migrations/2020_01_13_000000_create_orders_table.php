@@ -19,9 +19,9 @@ class CreateOrdersTable extends Migration
             //$table->unsignedInteger('courier_id')->index();
             $table->unsignedBigInteger('customer_id')->index()->nullable();
 
-            if (Schema::hasTable(config('user_table'))) {
-                $table->foreign('customer_id')->references(config('user_id_column',
-                    'id'))->on(config('user_table', 'users'));
+            if (Schema::hasTable(config('velkart.user_table', 'users'))) {
+                $table->foreign('customer_id')->references(config('velkart.user_id_column',
+                    'id'))->on(config('velkart.user_table', 'users'));
             }
 
             $table->unsignedBigInteger('address_id')->index()->nullable();
