@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Unit\Repositories;
+namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use IndieHD\Velkart\Contracts\AttributeRepositoryContract;
 use IndieHD\Velkart\Contracts\AttributeValueRepositoryContract;
-use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
 
 class AttributeValueTest extends RepositoryTestCase
 {

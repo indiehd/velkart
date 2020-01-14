@@ -1,6 +1,6 @@
 <?php
 
-namespace IndieHD\Velkart\Tests\Unit\Repositories;
+namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use IndieHD\Velkart\Contracts\BaseRepositoryContract;

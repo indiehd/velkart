@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Unit\Repositories;
+namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
-use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
-use IndieHD\Velkart\Traits\UploadsFiles;
 use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
+use IndieHD\Velkart\Traits\UploadsFiles;
 
 class ProductImageTest extends RepositoryTestCase
 {
