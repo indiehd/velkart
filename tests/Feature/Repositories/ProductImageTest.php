@@ -47,13 +47,13 @@ class ProductImageTest extends RepositoryTestCase
     {
         $productImage = $this->create();
 
-        $updated = $this->repo->update($productImage->id, [
+        $updated = $this->getRepository()->update($productImage->id, [
             'disk' => 'public',
             'path' => 'productImage.jpg',
         ]);
 
         $this->assertTrue($updated, 'ProductImage did NOT update');
-        $this->assertDatabaseHas('product_images', [
+        $this->assertDatabaseHas($this->getRepository()->model()->getTable(), [
             'disk' => 'public',
             'path' => 'productImage.jpg',
         ]);
@@ -68,7 +68,7 @@ class ProductImageTest extends RepositoryTestCase
         $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
         $newPath = $this->storeFile($newImage);
 
-        $this->repo->update($productImage->id, [
+        $this->getRepository()->update($productImage->id, [
             'path' => $newPath
         ]);
 
@@ -80,19 +80,19 @@ class ProductImageTest extends RepositoryTestCase
     /** @test */
     public function itFailsToUpdateWhenProductImageIdIsInvalid()
     {
-        $updated = $this->repo->update(5, [
+        $updated = $this->getRepository()->update(5, [
             'src' => 'productImage.jpg'
         ]);
 
         $this->assertFalse($updated, 'ProductImage DID update');
-        $this->assertDatabaseMissing('product_images', ['src' => 'productImage.jpg']);
+        $this->assertDatabaseMissing($this->getRepository()->model()->getTable(), ['src' => 'productImage.jpg']);
     }
 
     /** @test */
     public function itRemovesImageFromDiskWhenDeletingAProductImage()
     {
         $productImage = $this->create();
-        $this->repo->delete($productImage->id);
+        $this->getRepository()->delete($productImage->id);
 
         $exists = $this->filesystem->disk('public')->exists($productImage->src);
         $this->assertFalse($exists, 'The product image still exists');
@@ -101,7 +101,7 @@ class ProductImageTest extends RepositoryTestCase
     /** @test */
     public function itFailsToDeleteWhenProductImageIdIsInvalid()
     {
-        $this->assertFalse($this->repo->delete(5), 'ProductImage DID delete');
+        $this->assertFalse($this->getRepository()->delete(5), 'ProductImage DID delete');
     }
 
     /** @test */
