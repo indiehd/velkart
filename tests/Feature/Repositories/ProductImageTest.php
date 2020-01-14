@@ -5,9 +5,9 @@ namespace Tests\Unit\Repositories;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
+use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
 use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
 use IndieHD\Velkart\Traits\UploadsFiles;
-use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
 
 class ProductImageTest extends RepositoryTestCase
 {
