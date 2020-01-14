@@ -2,7 +2,6 @@
 
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Order;
@@ -15,19 +14,12 @@ class OrderRepository extends BaseRepository implements OrderRepositoryContract
     protected $order;
 
     /**
-     * @var DatabaseManager
-     */
-    protected $db;
-
-    /**
      * OrderRepository constructor.
      * @param Order $order
-     * @param DatabaseManager $db
      */
-    public function __construct(Order $order, DatabaseManager $db)
+    public function __construct(Order $order)
     {
         $this->order = $order;
-        $this->db = $db;
     }
 
     public function modelClass(): string
