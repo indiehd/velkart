@@ -25,12 +25,16 @@ class CategoryTest extends RepositoryTestCase
     {
         $category = $this->create();
 
-        $updated = $this->repo->update($category->id, [
-            'name' => $category->name . ' new',
-        ]);
+        $updated = $this->repo->update(
+            $category->id,
+            ['name' => $category->name . ' new']
+        );
 
         $this->assertTrue($updated, 'Category did NOT update');
-        $this->assertDatabaseHas('categories', ['name' => $category->name . ' new']);
+        $this->assertDatabaseHas(
+            $this->repo->model()->getTable(),
+            ['name' => $category->name . ' new']
+        );
     }
 
     /** @test */
@@ -56,7 +60,7 @@ class CategoryTest extends RepositoryTestCase
 
         $this->assertCount(1, $parent->children);
         $this->assertDatabaseHas(
-            'categories',
+            $this->repo->model()->getTable(),
             [
                 'name' => $child->name,
                 'parent_id' => $parent->id,
