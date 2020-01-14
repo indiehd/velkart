@@ -39,25 +39,4 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryCon
     {
         return Category::class;
     }
-
-    /**
-     * @param int $id
-     * @return bool
-     * @throws \Throwable
-     */
-    public function delete(int $id): bool
-    {
-        $this->db->beginTransaction();
-
-        try {
-            $model = $this->findById($id);
-            $deleted = $model->delete();
-        } catch (\Exception $e) {
-            $this->db->rollBack();
-            return false;
-        }
-
-        $this->db->commit();
-        return true;
-    }
 }
