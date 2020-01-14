@@ -15,7 +15,7 @@ class OrderRepositoryTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->repo = resolve(OrderRepositoryContract::class);
+        $this->setRepository(resolve(OrderRepositoryContract::class));
         $this->product = resolve(ProductRepositoryContract::class);
     }
 

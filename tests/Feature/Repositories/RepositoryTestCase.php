@@ -8,10 +8,22 @@ use IndieHD\Velkart\Tests\TestCase;
 
 abstract class RepositoryTestCase extends TestCase
 {
-    protected $repo;
+    private $repo;
 
+    protected function setRepository(BaseRepositoryContract $repo): void
+    {
+        $this->repo = $repo;
+    }
+
+    /**
+     * @return BaseRepositoryContract
+     * @throws \Exception
+     */
     protected function getRepository(): BaseRepositoryContract
     {
+        if ($this->repo === null) {
+            throw new \Exception('The repository has not been set! See setRepository()');
+        }
         return $this->repo;
     }
 
