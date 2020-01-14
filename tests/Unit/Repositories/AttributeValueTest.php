@@ -23,12 +23,12 @@ class AttributeValueTest extends RepositoryTestCase
     {
         $attributeValue = $this->create();
 
-        $updated = $this->repo->update($attributeValue->id, [
+        $updated = $this->getRepository()->update($attributeValue->id, [
             'value' => 'new value'
         ]);
 
         $this->assertTrue($updated, 'Attribute did NOT update');
-        $this->assertDatabaseHas($this->repo->model()->getTable(), ['value' => 'new value']);
+        $this->assertDatabaseHas($this->getRepository()->model()->getTable(), ['value' => 'new value']);
     }
 
     /** @test */
