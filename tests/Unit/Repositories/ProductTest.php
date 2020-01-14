@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Unit\Repositories;
+namespace IndieHD\Velkart\Tests\Unit\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
 
 class ProductTest extends RepositoryTestCase
 {
@@ -25,7 +24,7 @@ class ProductTest extends RepositoryTestCase
     {
         $product = $this->create();
 
-        $updated = $this->repo->update($product->id, [
+        $updated = $this->getRepository()->update($product->id, [
             'price' => 799.99
         ]);
 
