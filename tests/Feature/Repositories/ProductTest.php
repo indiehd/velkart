@@ -36,7 +36,7 @@ class ProductTest extends RepositoryTestCase
         ]);
 
         $this->assertTrue($updated, 'Product did NOT update');
-        $this->assertDatabaseHas('products', ['price' => 799.99]);
+        $this->assertDatabaseHas($this->getRepository()->model()->getTable(), ['price' => 799.99]);
     }
 
     /** @test */
