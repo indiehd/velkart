@@ -1,10 +1,11 @@
 <?php
 
-use IndieHD\Velkart\Models\Eloquent\Order;
-use Illuminate\Support\Str;
+use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use Ramsey\Uuid\Uuid;
 
-$factory->define(Order::class, function (Faker\Generator $faker) {
+$order = resolve(OrderRepositoryContract::class);
+
+$factory->define($order->modelClass(), function (Faker\Generator $faker) {
 
     $reference = Uuid::uuid4();
 
