@@ -23,6 +23,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "IndieHD\\Velkart\\Database\\Seeds\\": "database/seeds/",
       "IndieHD\\Velkart\\Tests\\": "tests/"
     }
   },
