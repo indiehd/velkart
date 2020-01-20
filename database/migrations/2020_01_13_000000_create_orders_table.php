@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('reference')->unique()->index();
+            $table->string('shopping_cart_id')->unique()->index();
             $table->unsignedBigInteger('customer_id')->index()->nullable();
             #$table->unsignedBigInteger('address_id')->index()->nullable();
             #$table->unsignedInteger('order_status_id')->index();
@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
                     'id'))->on(config('velkart.user_table', 'users'));
             }
 
+            $table->foreign('shopping_cart_id')->references('id')->on('shopping_carts');
             #$table->foreign('address_id')->references('id')->on('addresses');
             #$table->foreign('order_status_id')->references('id')->on('order_statuses');
             $table->timestamps();
