@@ -6,25 +6,25 @@ use Illuminate\Support\ServiceProvider;
 use IndieHD\Velkart\Contracts\AddressRepositoryContract;
 use IndieHD\Velkart\Contracts\AttributeRepositoryContract;
 use IndieHD\Velkart\Contracts\AttributeValueRepositoryContract;
+use IndieHD\Velkart\Contracts\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
 use IndieHD\Velkart\Contracts\CountryRepositoryContract;
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\OrderStatusRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
 use IndieHD\Velkart\Repositories\Eloquent\AddressRepository;
 use IndieHD\Velkart\Repositories\Eloquent\AttributeRepository;
 use IndieHD\Velkart\Repositories\Eloquent\AttributeValueRepository;
+use IndieHD\Velkart\Repositories\Eloquent\CartRepository;
 use IndieHD\Velkart\Repositories\Eloquent\CategoryRepository;
 use IndieHD\Velkart\Repositories\Eloquent\CountryRepository;
 use IndieHD\Velkart\Repositories\Eloquent\OrderRepository;
 use IndieHD\Velkart\Repositories\Eloquent\OrderStatusRepository;
 use IndieHD\Velkart\Repositories\Eloquent\ProductImageRepository;
 use IndieHD\Velkart\Repositories\Eloquent\ProductRepository;
-use IndieHD\Velkart\Repositories\Eloquent\CartRepository;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\UuidFactoryInterface;
 
 class VelkartServiceProvider extends ServiceProvider
 {
@@ -47,6 +47,6 @@ class VelkartServiceProvider extends ServiceProvider
         $this->app->bind(AttributeRepositoryContract::class, AttributeRepository::class);
         $this->app->bind(AttributeValueRepositoryContract::class, AttributeValueRepository::class);
         $this->app->bind(CartRepositoryContract::class, CartRepository::class);
-        $this->app->bind(UuidInterface::class, Uuid::class);
+        $this->app->bind(UuidFactoryInterface::class, UuidFactory::class);
     }
 }

@@ -4,10 +4,15 @@ namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\CartRepositoryContract;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactoryInterface;
 
 class CartTest extends RepositoryTestCase
 {
+    /*
+     * @var UuidFactoryInterface
+     */
+    protected $uuid;
+
     /*
      * @var OrderRepositoryContract
      */
@@ -19,6 +24,8 @@ class CartTest extends RepositoryTestCase
 
         $this->setRepository(resolve(CartRepositoryContract::class));
 
+        $this->uuid = resolve(UuidFactoryInterface::class);
+
         $this->order = resolve(OrderRepositoryContract::class);
     }
 
@@ -27,7 +34,7 @@ class CartTest extends RepositoryTestCase
     {
         $cart = factory($this->getRepository()->modelClass())->create();
 
-        $identifier = Uuid::uuid4();
+        $identifier = $this->uuid->uuid4();
 
         $updates = [
             'identifier' => $identifier->toString()

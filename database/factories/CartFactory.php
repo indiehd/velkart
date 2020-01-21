@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Collection;
 use IndieHD\Velkart\Contracts\CartRepositoryContract;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactoryInterface;
 
 $cartRepository = resolve(CartRepositoryContract::class);
 
 $factory->define($cartRepository->modelClass(), function (Faker\Generator $faker) {
 
-    $identifier = Uuid::uuid4();
+    $identifier = resolve(UuidFactoryInterface::class)->uuid4();
 
     return [
         'identifier' => $identifier->toString(),
