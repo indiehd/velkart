@@ -2,10 +2,9 @@
 
 namespace Tests\Unit\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-use IndieHD\Velkart\Contracts\ProductRepositoryContract;
 use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
-use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
+use IndieHD\Velkart\Contracts\ProductRepositoryContract;
+use IndieHD\Velkart\Tests\Feature\Repositories\RepositoryTestCase;
 
 class CategoryTest extends RepositoryTestCase
 {
@@ -15,24 +14,24 @@ class CategoryTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->repo = resolve(CategoryRepositoryContract::class);
+        $this->setRepository(resolve(CategoryRepositoryContract::class));
 
         $this->productRepository = resolve(ProductRepositoryContract::class);
     }
 
     /** @test */
-    public function itCanUpdateACategory()
+    public function itCanUpdate()
     {
         $category = $this->create();
 
-        $updated = $this->repo->update(
+        $updated = $this->getRepository()->update(
             $category->id,
             ['name' => $category->name . ' new']
         );
 
         $this->assertTrue($updated, 'Category did NOT update');
         $this->assertDatabaseHas(
-            $this->repo->model()->getTable(),
+            $this->getRepository()->model()->getTable(),
             ['name' => $category->name . ' new']
         );
     }
@@ -60,7 +59,7 @@ class CategoryTest extends RepositoryTestCase
 
         $this->assertCount(1, $parent->children);
         $this->assertDatabaseHas(
-            $this->repo->model()->getTable(),
+            $this->getRepository()->model()->getTable(),
             [
                 'name' => $child->name,
                 'parent_id' => $parent->id,
