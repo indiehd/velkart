@@ -5,10 +5,11 @@ use IndieHD\Velkart\Contracts\CartRepositoryContract;
 use Ramsey\Uuid\UuidFactoryInterface;
 
 $cartRepository = resolve(CartRepositoryContract::class);
+$uuidFactory = resolve(UuidFactoryInterface::class);
 
-$factory->define($cartRepository->modelClass(), function (Faker\Generator $faker) {
+$factory->define($cartRepository->modelClass(), function (Faker\Generator $faker) use ($uuidFactory) {
 
-    $identifier = resolve(UuidFactoryInterface::class)->uuid4();
+    $identifier = $uuidFactory->uuid4();
 
     return [
         'identifier' => $identifier->toString(),
