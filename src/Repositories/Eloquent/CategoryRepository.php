@@ -3,9 +3,9 @@
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Illuminate\Database\DatabaseManager;
-use IndieHD\Velkart\Models\Eloquent\Category;
+use Illuminate\Database\Eloquent\Model;
 use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
-use IndieHD\Velkart\Repositories\Eloquent\BaseRepository;
+use IndieHD\Velkart\Models\Eloquent\Category;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryContract
 {
@@ -30,7 +30,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryCon
         $this->db = $db;
     }
 
-    public function model(): Category
+    public function model(): Model
     {
         return $this->category;
     }

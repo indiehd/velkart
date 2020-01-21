@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Repositories;
+namespace Tests\Feature\Repositories;
 
 use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
