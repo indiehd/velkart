@@ -14,7 +14,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "bumbummen99/shoppingcart": "^2.0"
+    "bumbummen99/shoppingcart": "^2.0",
+    "illuminate/support": "^6.0"
   },
   "autoload": {
     "psr-4": {
@@ -33,5 +34,12 @@
     "mockery/mockery": "^1.3@dev",
     "php-coveralls/php-coveralls": "2.2.x-dev",
     "phpro/grumphp": "^0.17.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "IndieHD\\Velkart\\VelkartServiceProvider"
+      ]
+    }
   }
 }
