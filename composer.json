@@ -15,6 +15,7 @@
   "minimum-stability": "dev",
   "require": {
     "bumbummen99/shoppingcart": "^2.0",
+    "baum/baum": "2.0.0-alpha1",
     "illuminate/support": "^6.0"
   },
   "autoload": {

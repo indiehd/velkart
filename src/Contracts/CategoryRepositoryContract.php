@@ -2,7 +2,7 @@
 
 namespace IndieHD\Velkart\Contracts;
 
-interface CategoryRepositoryContract
+interface CategoryRepositoryContract extends BaseRepositoryContract
 {
     //
 }

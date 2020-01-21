@@ -20,6 +20,12 @@ class CreateCategoriesTable extends Migration
             $table->text('description')->nullable();
             $table->string('cover')->nullable();
             $table->unsignedInteger('status')->default(0);
+
+            $table->integer('parent_id')->unsigned()->nullable()->index();
+            $table->foreign('parent_id')->references('id')->on('categories');
+            $table->integer('left')->unsigned()->nullable()->index();
+            $table->integer('right')->unsgined()->nullable()->index();
+            $table->integer('depth')->unsigned()->nullable()->index();
         });
     }
 
