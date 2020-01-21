@@ -49,9 +49,9 @@ class CartTest extends RepositoryTestCase
     /** @test */
     public function itHasOneOrder()
     {
-        $order = factory($this->order->modelClass())->create();
+        $cart = factory($this->getRepository()->modelClass())->create();
 
-        $cart = $this->getRepository()->findById($order->cart->id);
+        $cart->order()->save(factory($this->order->modelClass())->make());
 
         $this->assertInstanceOf(
             $this->order->modelClass(),
