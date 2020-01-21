@@ -5,7 +5,7 @@ namespace IndieHD\Velkart\Tests\Feature\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Contracts\ShoppingCartRepositoryContract;
+use IndieHD\Velkart\Contracts\CartRepositoryContract;
 
 class OrderRepositoryTest extends RepositoryTestCase
 {
@@ -15,7 +15,7 @@ class OrderRepositoryTest extends RepositoryTestCase
     protected $product;
 
     /**
-     * @var ShoppingCartRepositoryContract
+     * @var CartRepositoryContract
      */
     protected $cart;
 
@@ -26,7 +26,7 @@ class OrderRepositoryTest extends RepositoryTestCase
         $this->setRepository(resolve(OrderRepositoryContract::class));
 
         $this->product = resolve(ProductRepositoryContract::class);
-        $this->cart = resolve(ShoppingCartRepositoryContract::class);
+        $this->cart = resolve(CartRepositoryContract::class);
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class OrderRepositoryTest extends RepositoryTestCase
         $cart = factory($this->cart->modelClass())->create();
 
         $updates = [
-            'shopping_cart_id' => $cart->id,
+            'cart_id' => $cart->id,
         ];
 
         $updated = $this->getRepository()->update($order->id, $updates);
@@ -70,7 +70,7 @@ class OrderRepositoryTest extends RepositoryTestCase
 
         $this->assertInstanceOf(
             $this->cart->modelClass(),
-            $order->shoppingCart
+            $order->cart
         );
     }
 }

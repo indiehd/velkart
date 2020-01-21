@@ -3,10 +3,10 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
-use IndieHD\Velkart\Contracts\ShoppingCartRepositoryContract;
+use IndieHD\Velkart\Contracts\CartRepositoryContract;
 use Ramsey\Uuid\Uuid;
 
-class ShoppingCartTest extends RepositoryTestCase
+class CartTest extends RepositoryTestCase
 {
     /*
      * @var OrderRepositoryContract
@@ -17,7 +17,7 @@ class ShoppingCartTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->setRepository(resolve(ShoppingCartRepositoryContract::class));
+        $this->setRepository(resolve(CartRepositoryContract::class));
 
         $this->order = resolve(OrderRepositoryContract::class);
     }
@@ -44,7 +44,7 @@ class ShoppingCartTest extends RepositoryTestCase
     {
         $order = factory($this->order->modelClass())->create();
 
-        $cart = $this->getRepository()->findById($order->shoppingCart->id);
+        $cart = $this->getRepository()->findById($order->cart->id);
 
         $this->assertInstanceOf(
             $this->order->modelClass(),

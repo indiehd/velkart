@@ -5,7 +5,7 @@ namespace IndieHD\Velkart\Models\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class ShoppingCart extends Model
+class Cart extends Model
 {
     protected $guarded = ['id'];
 

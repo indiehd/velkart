@@ -21,8 +21,8 @@ class Order extends Model
     /**
      * @return BelongsTo
      */
-    public function shoppingCart(): BelongsTo
+    public function cart(): BelongsTo
     {
-        return $this->belongsTo(ShoppingCart::class);
+        return $this->belongsTo(Cart::class);
     }
 }

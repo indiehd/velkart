@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShoppingcartTable extends Migration
+class CreateCartTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('shopping_carts', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('identifier');
+            $table->string('identifier')->index();
             $table->string('instance');
             $table->longText('content');
             $table->nullableTimestamps();
@@ -26,6 +26,6 @@ class CreateShoppingcartTable extends Migration
      */
     public function down()
     {
-        Schema::drop('shopping_carts');
+        Schema::drop('carts');
     }
 }
