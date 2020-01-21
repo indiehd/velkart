@@ -13,7 +13,7 @@ class CreateCartTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('identifier')->index();
+            $table->string('identifier');
             $table->string('instance');
             $table->longText('content');
             $table->nullableTimestamps();
