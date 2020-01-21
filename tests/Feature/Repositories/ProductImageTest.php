@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Unit\Repositories;
+namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
-use IndieHD\Velkart\Tests\Unit\Repositories\RepositoryTestCase;
-use IndieHD\Velkart\Traits\UploadsFiles;
 use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
+use IndieHD\Velkart\Traits\UploadsFiles;
 
 class ProductImageTest extends RepositoryTestCase
 {
@@ -19,7 +18,7 @@ class ProductImageTest extends RepositoryTestCase
     {
         parent::setUp();
 
-        $this->repo = resolve(ProductImageRepositoryContract::class);
+        $this->setRepository(resolve(ProductImageRepositoryContract::class));
         $this->filesystem = resolve(FilesystemContract::class);
     }
 
@@ -44,17 +43,17 @@ class ProductImageTest extends RepositoryTestCase
     }
 
     /** @test */
-    public function itCanUpdateAProductImage()
+    public function itCanUpdate()
     {
         $productImage = $this->create();
 
-        $updated = $this->repo->update($productImage->id, [
+        $updated = $this->getRepository()->update($productImage->id, [
             'disk' => 'public',
             'path' => 'productImage.jpg',
         ]);
 
         $this->assertTrue($updated, 'ProductImage did NOT update');
-        $this->assertDatabaseHas('product_images', [
+        $this->assertDatabaseHas($this->getRepository()->model()->getTable(), [
             'disk' => 'public',
             'path' => 'productImage.jpg',
         ]);
@@ -69,7 +68,7 @@ class ProductImageTest extends RepositoryTestCase
         $newImage = UploadedFile::fake()->image('product.jpg', 600, 600);
         $newPath = $this->storeFile($newImage);
 
-        $this->repo->update($productImage->id, [
+        $this->getRepository()->update($productImage->id, [
             'path' => $newPath
         ]);
 
@@ -81,28 +80,19 @@ class ProductImageTest extends RepositoryTestCase
     /** @test */
     public function itFailsToUpdateWhenProductImageIdIsInvalid()
     {
-        $updated = $this->repo->update(5, [
+        $updated = $this->getRepository()->update(5, [
             'src' => 'productImage.jpg'
         ]);
 
         $this->assertFalse($updated, 'ProductImage DID update');
-        $this->assertDatabaseMissing('product_images', ['src' => 'productImage.jpg']);
-    }
-
-    public function itCanDeleteAProductImage()
-    {
-        $productImage = $this->create();
-        $deleted = $this->repo->delete($productImage->id);
-
-        $this->assertTrue($deleted);
-        $this->assertDatabaseMissing('product_images', ['path' => $productImage->path]);
+        $this->assertDatabaseMissing($this->getRepository()->model()->getTable(), ['src' => 'productImage.jpg']);
     }
 
     /** @test */
     public function itRemovesImageFromDiskWhenDeletingAProductImage()
     {
         $productImage = $this->create();
-        $this->repo->delete($productImage->id);
+        $this->getRepository()->delete($productImage->id);
 
         $exists = $this->filesystem->disk('public')->exists($productImage->src);
         $this->assertFalse($exists, 'The product image still exists');
@@ -111,7 +101,7 @@ class ProductImageTest extends RepositoryTestCase
     /** @test */
     public function itFailsToDeleteWhenProductImageIdIsInvalid()
     {
-        $this->assertFalse($this->repo->delete(5), 'ProductImage DID delete');
+        $this->assertFalse($this->getRepository()->delete(5), 'ProductImage DID delete');
     }
 
     /** @test */

@@ -52,7 +52,7 @@ parameters:
         - "die("
         - "var_dump("
         - "exit;"
-        - "exit("
+        # - "exit("
         # - "dd("
       whitelist_patterns:
         - /^database\/(.*)/

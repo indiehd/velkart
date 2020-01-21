@@ -12,7 +12,7 @@ class ProductImage extends Model
     protected $guarded = ['id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function product(): BelongsTo
     {

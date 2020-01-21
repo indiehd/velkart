@@ -33,17 +33,25 @@ class ProductRepository extends BaseRepository Implements ProductRepositoryContr
         $this->db = $db;
     }
 
+    /**
+     * @return Model
+     */
     public function model(): Model
     {
         return $this->product;
     }
 
+    /**
+     * @return string
+     */
     public function modelClass(): string
     {
         return Product::class;
     }
 
     /**
+     * Deletes a Product
+     *
      * @param int $id
      * @return bool
      * @throws \Throwable

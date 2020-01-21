@@ -41,16 +41,30 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
         $this->db = $db;
     }
 
+    /**
+     * @return Model
+     */
     public function model(): Model
     {
         return $this->productImage;
     }
 
+    /**
+     * @return string
+     */
     public function modelClass(): string
     {
         return ProductImage::class;
     }
 
+    /**
+     * Updates A Product Image
+     *
+     * @param int $id
+     * @param array $attributes
+     * @return bool
+     * @throws \Exception
+     */
     public function update(int $id, array $attributes): bool
     {
         $this->db->beginTransaction();
@@ -72,6 +86,13 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
         return false;
     }
 
+    /**
+     * Deletes a Product Image
+     *
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
     public function delete(int $id): bool
     {
         $this->db->beginTransaction();
