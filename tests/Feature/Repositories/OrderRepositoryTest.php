@@ -5,18 +5,28 @@ namespace IndieHD\Velkart\Tests\Feature\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use Ramsey\Uuid\Uuid;
+use IndieHD\Velkart\Contracts\CartRepositoryContract;
 
 class OrderRepositoryTest extends RepositoryTestCase
 {
+    /**
+     * @var ProductRepositoryContract
+     */
     protected $product;
+
+    /**
+     * @var CartRepositoryContract
+     */
+    protected $cart;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->setRepository(resolve(OrderRepositoryContract::class));
+
         $this->product = resolve(ProductRepositoryContract::class);
+        $this->cart = resolve(CartRepositoryContract::class);
     }
 
     /** @test */
@@ -24,10 +34,10 @@ class OrderRepositoryTest extends RepositoryTestCase
     {
         $order = factory($this->getRepository()->modelClass())->create();
 
-        $reference = Uuid::uuid4();
+        $cart = factory($this->cart->modelClass())->create();
 
         $updates = [
-            'reference' => $reference
+            'cart_id' => $cart->id,
         ];
 
         $updated = $this->getRepository()->update($order->id, $updates);
@@ -53,5 +63,14 @@ class OrderRepositoryTest extends RepositoryTestCase
         );
     }
 
+    /** @test */
+    public function itBelongsToShoppingCart()
+    {
+        $order = factory($this->getRepository()->modelClass())->create();
 
+        $this->assertInstanceOf(
+            $this->cart->modelClass(),
+            $order->cart
+        );
+    }
 }

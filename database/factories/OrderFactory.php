@@ -1,16 +1,15 @@
 <?php
 
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
-use Ramsey\Uuid\Uuid;
+use IndieHD\Velkart\Contracts\CartRepositoryContract;
 
 $order = resolve(OrderRepositoryContract::class);
+$cart = resolve(CartRepositoryContract::class);
 
-$factory->define($order->modelClass(), function (Faker\Generator $faker) {
-
-    $reference = Uuid::uuid4();
+$factory->define($order->modelClass(), function (Faker\Generator $faker) use ($cart) {
 
     return [
-        'reference' => $reference,
+        'cart_id' => factory($cart->modelClass())->create()->id,
     ];
 
 });
