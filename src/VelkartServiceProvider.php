@@ -33,6 +33,12 @@ class VelkartServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+
+        $this->publishes([
+            __DIR__ . '/Config/cart.php' => config_path('velkart.cart.php'),
+        ]);
+
+        config(['cart' => array_merge_recursive(config('cart') ?? [], config('velkart.cart'))]);
     }
 
     public function register()
@@ -48,5 +54,10 @@ class VelkartServiceProvider extends ServiceProvider
         $this->app->bind(AttributeValueRepositoryContract::class, AttributeValueRepository::class);
         $this->app->bind(CartRepositoryContract::class, CartRepository::class);
         $this->app->bind(UuidFactoryInterface::class, UuidFactory::class);
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/Config/cart.php',
+            'velkart.cart'
+        );
     }
 }
