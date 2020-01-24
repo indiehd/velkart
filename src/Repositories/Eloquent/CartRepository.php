@@ -5,10 +5,11 @@ namespace IndieHD\Velkart\Repositories\Eloquent;
 use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use IndieHD\Velkart\Contracts\CartItemContract;
 use IndieHD\Velkart\Contracts\CartRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Cart as CartModel;
 
-class CartRepository extends BaseRepository implements CartRepositoryContract
+class CartRepository implements CartRepositoryContract
 {
     /**
      * @var CartModel
@@ -54,23 +55,64 @@ class CartRepository extends BaseRepository implements CartRepositoryContract
      */
     public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable
     {
-        $cartModels = $this->model()->orderBy($order, $sort)->get($columns);
-
-        $cartCollection = new Collection();
-
-        foreach ($cartModels as $cart) {
-            $this->cart->restore($cart->identifier);
-
-            $cartCollection->put($cart->identifier, $this->cart->content());
-        }
-
-        return $cartCollection;
+        return $this->model()->orderBy($order, $sort)->get($columns);
     }
 
-    public function findByIdentifier(string $identifier): string
+    public function findByIdentifier(string $identifier): Collection
     {
         $this->cart->restore($identifier);
 
         return $this->cart->content();
     }
+
+    /**
+     * Create a new record
+     *
+     * @param string $identifier
+     * @return void
+     */
+    public function create(string $identifier): void
+    {
+        $this->cart->store($identifier);
+    }
+
+    public function add(string $identifier, CartItemContract $item)
+    {
+        $this->cart->restore($identifier);
+
+        $cartItem = $this->cart->add($item->toArray());
+
+        $this->cart->store($identifier);
+
+        // This destroys the Cart Items within the *session*. Failure to do this
+        // before "switching Carts", that is, restoring a Cart, modifying the
+        // Items therein, and then storing it , can cause non-obvious behavior.
+
+        $this->cart->destroy();
+
+        return $cartItem;
+    }
+
+    public function update(string $identifier, $items)
+    {
+        $this->cart->restore($identifier);
+
+        foreach ($items as $rowId => $props) {
+            $this->cart->update($rowId, $props);
+        }
+
+        return true;
+    }
+
+    /*
+    public function remove()
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+    */
 }

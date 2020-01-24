@@ -2,7 +2,9 @@
 
 namespace IndieHD\Velkart\Contracts;
 
-interface CartRepositoryContract extends BaseRepositoryContract
+use Illuminate\Support\Collection;
+
+interface CartRepositoryContract
 {
-    public function findByIdentifier(string $identifier): string;
+    public function findByIdentifier(string $identifier): Collection;
 }

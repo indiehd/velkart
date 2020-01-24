@@ -2,22 +2,60 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use IndieHD\Velkart\Contracts\OrderRepositoryContract;
+use Illuminate\Support\Collection;
+use IndieHD\Velkart\Contracts\BaseRepositoryContract;
+use IndieHD\Velkart\Contracts\CartItemContract;
+use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
 use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\OrderRepositoryContract;
+use IndieHD\Velkart\Tests\TestCase;
 use Ramsey\Uuid\UuidFactoryInterface;
 
-class CartTest extends RepositoryTestCase
+class CartTest extends TestCase
 {
-    /*
-     * @var UuidFactoryInterface
+    /**
+     * @var CartRepositoryContract
      */
-    protected $uuid;
+    private $repo;
 
-    /*
+    /**
      * @var OrderRepositoryContract
      */
     protected $order;
 
+    /**
+     * @var UuidFactoryInterface
+     */
+    protected $uuid;
+
+    /**
+     * @var CartItemRepositoryContract
+     */
+    protected $cartItem;
+
+    /**
+     * @param CartRepositoryContract $repo
+     */
+    protected function setRepository(CartRepositoryContract $repo): void
+    {
+        $this->repo = $repo;
+    }
+
+    /**
+     * @return BaseRepositoryContract
+     * @throws \Exception
+     */
+    protected function getRepository(): CartRepositoryContract
+    {
+        if ($this->repo === null) {
+            throw new \Exception('The repository has not been set! See setRepository()');
+        }
+        return $this->repo;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -27,6 +65,34 @@ class CartTest extends RepositoryTestCase
         $this->uuid = resolve(UuidFactoryInterface::class);
 
         $this->order = resolve(OrderRepositoryContract::class);
+
+        $this->cartItem = resolve(CartItemRepositoryContract::class);
+    }
+
+    /** @test */
+    public function itCanCreate()
+    {
+        $identifier = $this->uuid->uuid4();
+
+        $this->getRepository()->create($identifier);
+
+        $cartItem = $this->cartItem->make(1, 'Foo', 1.00);
+
+        $cartItem->setQuantity(1);
+
+        $this->getRepository()->add(
+            $identifier,
+            $cartItem
+        );
+
+        $cart = $this->getRepository()->findByIdentifier($identifier);
+
+        $this->assertInstanceOf(
+            Collection::class,
+            $cart
+        );
+
+        $this->assertFalse($cart->isEmpty());
     }
 
     /** @test */
@@ -34,16 +100,23 @@ class CartTest extends RepositoryTestCase
     {
         $cart = factory($this->getRepository()->modelClass())->create();
 
-        $identifier = $this->uuid->uuid4();
+        $cartItem = $this->cartItem->make(1, 'Foo', 1.00);
+
+        $cartItem->setQuantity(1);
+
+        $cartItem = $this->getRepository()->add($cart->identifier, $cartItem);
 
         $updates = [
-            'identifier' => $identifier->toString()
+            $cartItem->rowId => ['qty' => 5]
         ];
 
-        $updated = $this->getRepository()->update($cart->id, $updates);
+        $updated = $this->getRepository()->update($cart->identifier, $updates);
 
         $this->assertTrue($updated);
-        $this->assertDatabaseHas($this->getRepository()->model()->getTable(), $updates);
+
+        $updatedCart = $this->getRepository()->findByIdentifier($cart->identifier);
+
+        $this->assertEquals($updatedCart->first()->qty, 5);
     }
 
     /** @test */
