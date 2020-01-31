@@ -9,7 +9,7 @@ use IndieHD\Velkart\Database\Seeds\CountriesSeeder;
 
 abstract class RepositoryTestCase extends TestCase
 {
-    private $repo;
+    protected $repo;
 
     protected function setRepository(BaseRepositoryContract $repo): void
     {

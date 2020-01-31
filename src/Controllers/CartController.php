@@ -2,17 +2,18 @@
 
 namespace IndieHD\Velkart\Controllers;
 
-use Illuminate\Http\Request;
 use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Requests\StoreCart;
+use IndieHD\Velkart\Requests\UpdateCart;
 use IndieHD\Velkart\Resources\CartResource;
 
-class CartController extends ApiController
+class CartController extends CartApiController
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->repo = resolve(CartRepositoryContract::class);
+        $this->repo = resolve($this->repository());
     }
 
     /**
@@ -42,7 +43,7 @@ class CartController extends ApiController
      */
     public function storeRequest()
     {
-        // return StoreRequest::class;
+        return StoreCart::class;
     }
 
     /**
@@ -52,7 +53,7 @@ class CartController extends ApiController
      */
     public function updateRequest()
     {
-        // return UpdateRequest::class;
+        return UpdateCart::class;
     }
 
     public function destroyRequest()

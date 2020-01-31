@@ -2,17 +2,20 @@
 
 namespace IndieHD\Velkart\Controllers;
 
-use IndieHD\Velkart\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-abstract class ApiController extends Controller
+abstract class CartApiController extends Controller
 {
-
     /**
      * @var string $repository
      */
     private $repository;
+
+    /**
+     * @var string $resource
+     */
+    private $resource;
 
     /**
      * Should return the <RepositoryInterface>::class
@@ -20,11 +23,6 @@ abstract class ApiController extends Controller
      * @return string
      */
     abstract public function repository();
-
-    /**
-     * @var string $resource
-     */
-    private $resource;
 
     /**
      * Should return the <Resource>::class
@@ -55,11 +53,12 @@ abstract class ApiController extends Controller
     abstract public function destroyRequest();
 
     /**
-     * ApiController constructor.
+     * Constructor.
      */
     public function __construct()
     {
         $this->repository = resolve($this->repository());
+
         $this->resource = $this->resource();
     }
 
@@ -95,12 +94,12 @@ abstract class ApiController extends Controller
         }
 
         return $this->resource::collection(
-            isset($models) ? $models : $this->repository->list()
+            isset($models) ? $models : $this->repository->all()
         );
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new resource.
      *
      * @param Request $request
      * @return JsonResource
@@ -109,11 +108,11 @@ abstract class ApiController extends Controller
     {
         resolve($this->storeRequest());
 
-        return new $this->resource($this->repository->create($request->list()));
+        return new $this->resource($this->repository->create($request->all()));
     }
 
     /**
-     * Display the specified resource.
+     * Return the specified resource.
      *
      * @param int $id
      * @return JsonResource
@@ -124,21 +123,23 @@ abstract class ApiController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource.
      *
      * @param Request $request
      * @param int $id
      * @return JsonResource
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         resolve($this->updateRequest());
-        
-        return new $this->resource($this->repository->update($request->input('items')));
+
+        $this->repository->update($id, $request->all());
+
+        return new $this->resource($this->repository->findById($id));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource.
      *
      * @param  Request $request
      * @param  int $id

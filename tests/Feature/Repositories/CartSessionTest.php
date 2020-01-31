@@ -2,16 +2,19 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
+use Gloudemans\Shoppingcart\CartItem;
+use Gloudemans\Shoppingcart\Exceptions\InvalidRowIDException;
 use Illuminate\Support\Collection;
 use IndieHD\Velkart\Contracts\BaseRepositoryContract;
 use IndieHD\Velkart\Contracts\CartItemContract;
 use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
 use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\CartSessionRepositoryContract;
 use IndieHD\Velkart\Contracts\OrderRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
 use Ramsey\Uuid\UuidFactoryInterface;
 
-class CartTest extends TestCase
+class CartSessionTest extends TestCase
 {
     /**
      * @var CartRepositoryContract
@@ -34,9 +37,9 @@ class CartTest extends TestCase
     protected $cartItem;
 
     /**
-     * @param CartRepositoryContract $repo
+     * @param CartSessionRepositoryContract $repo
      */
-    protected function setRepository(CartRepositoryContract $repo): void
+    protected function setRepository(CartSessionRepositoryContract $repo): void
     {
         $this->repo = $repo;
     }
@@ -45,7 +48,7 @@ class CartTest extends TestCase
      * @return BaseRepositoryContract
      * @throws \Exception
      */
-    protected function getRepository(): CartRepositoryContract
+    protected function getRepository(): CartSessionRepositoryContract
     {
         if ($this->repo === null) {
             throw new \Exception('The repository has not been set! See setRepository()');
@@ -60,7 +63,7 @@ class CartTest extends TestCase
     {
         parent::setUp();
 
-        $this->setRepository(resolve(CartRepositoryContract::class));
+        $this->setRepository(resolve(CartSessionRepositoryContract::class));
 
         $this->uuid = resolve(UuidFactoryInterface::class);
 
@@ -72,30 +75,43 @@ class CartTest extends TestCase
     /** @test */
     public function itCanCreate()
     {
-        $identifier = $this->uuid->uuid4();
-
-        $this->getRepository()->create($identifier);
-
-        $cart = $this->getRepository()->findByIdentifier($identifier);
+        $item = $this->cartItem->make(1, 'Foo', 1.00);
 
         $this->assertInstanceOf(
-            Collection::class,
-            $cart
+            CartItem::class,
+            $this->getRepository()->create($item)
         );
-
-        $this->assertTrue($cart->isEmpty());
     }
 
-    /** @test */
-    public function itHasOneOrder()
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function itCanListAllModels()
     {
-        $cart = factory($this->getRepository()->modelClass())->create();
+        $item = $this->cartItem->make(1, 'Foo', 1.00);
 
-        $cart->order()->save(factory($this->order->modelClass())->make());
+        $this->getRepository()->create($item);
 
         $this->assertInstanceOf(
-            $this->order->modelClass(),
-            $cart->order
+            CartItem::class,
+            $this->getRepository()->all()->first()
+        );
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function itCanListOneModel()
+    {
+        $item = $this->cartItem->make(1, 'Foo', 1.00);
+
+        $this->getRepository()->create($item);
+
+        $this->assertInstanceOf(
+            CartItem::class,
+            $this->getRepository()->find($item->rowId)
         );
     }
 }
