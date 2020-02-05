@@ -1,6 +1,6 @@
 <?php
 
-use IndieHD\Velkart\Contracts\CountryRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
 
 $country = resolve(CountryRepositoryContract::class);
 

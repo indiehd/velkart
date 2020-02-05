@@ -1,6 +1,6 @@
 <?php
 
-use IndieHD\Velkart\Contracts\OrderStatusRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 
 $orderStatus = resolve(OrderStatusRepositoryContract::class);
 

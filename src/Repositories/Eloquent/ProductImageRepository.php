@@ -5,9 +5,9 @@ namespace IndieHD\Velkart\Repositories\Eloquent;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemContract;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Traits\UploadsFiles;
-use IndieHD\Velkart\Contracts\ProductImageRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductImageRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\ProductImage;
+use IndieHD\Velkart\Traits\UploadsFiles;
 
 class ProductImageRepository extends BaseRepository implements ProductImageRepositoryContract
 {
@@ -105,7 +105,6 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
                     throw new \Exception("Product image $id at $model->path not deleted from $model->disk");
                 }
             }
-
         } catch (\Exception $e) {
             $this->db->rollBack();
             return false;

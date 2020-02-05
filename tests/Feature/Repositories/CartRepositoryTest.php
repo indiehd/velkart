@@ -3,10 +3,9 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Collection;
-use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
-use IndieHD\Velkart\Contracts\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
 use Ramsey\Uuid\UuidFactoryInterface;
 
@@ -75,18 +74,16 @@ class CartRepositoryTest extends TestCase
     /** @test */
     public function itCanCreate()
     {
-        $identifier = $this->uuid->uuid4();
+        $identifier = 'foo';
 
         $this->getRepository()->create($identifier);
 
         $cart = $this->getRepository()->findByIdentifier($identifier);
 
         $this->assertInstanceOf(
-            Collection::class,
+            $this->getRepository()->modelClass(),
             $cart
         );
-
-        $this->assertTrue($cart->isEmpty());
     }
 
     /** @test */
@@ -154,16 +151,18 @@ class CartRepositoryTest extends TestCase
     {
         $model = $this->create();
 
+        $this->assertDatabaseHas(
+            $this->getRepository()->model()->getTable(),
+            ['identifier' => $model->identifier]
+        );
+
         $this->getRepository()->delete($model->identifier);
 
-        $this->assertTrue(
-            $this->getRepository()->findByIdentifier($model->identifier)->isEmpty(),
-            'Model did NOT delete'
-        );
+        #$this->expectException(ModelNotFoundException::class);
 
         $this->assertDatabaseMissing(
             $this->getRepository()->model()->getTable(),
-            ['name' => $model->name]
+            ['identifier' => $model->identifier]
         );
     }
 

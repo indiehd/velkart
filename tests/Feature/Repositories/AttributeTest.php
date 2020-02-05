@@ -3,8 +3,8 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use IndieHD\Velkart\Contracts\AttributeRepositoryContract;
-use IndieHD\Velkart\Contracts\AttributeValueRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeValueRepositoryContract;
 
 class AttributeTest extends RepositoryTestCase
 {

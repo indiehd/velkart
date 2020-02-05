@@ -2,7 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use IndieHD\Velkart\Contracts\OrderStatusRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 
 class OrderStatusTest extends RepositoryTestCase
 {

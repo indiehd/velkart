@@ -1,10 +1,10 @@
 <?php
 
-namespace IndieHD\Velkart\Requests;
+namespace IndieHD\Velkart\Requests\Cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCart extends FormRequest
+class DestroyCart extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class StoreCart extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
-            'name' => 'required',
-            'price' => 'required',
+
         ];
     }
 }

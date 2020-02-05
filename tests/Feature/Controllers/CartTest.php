@@ -3,18 +3,13 @@
 namespace Tests\Integration;
 
 use Illuminate\Support\Collection;
-use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
-use IndieHD\Velkart\Contracts\CartSessionRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Session\CartSessionRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
 
 class CartTest extends TestCase
 {
-    /**
-     * @var CartRepositoryContract
-     */
-    protected $cart;
-
     /**
      * @var CartSessionRepositoryContract
      */
@@ -42,7 +37,21 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function itCanRetrieveManyCartsWithItems()
+    public function itCanStore()
+    {
+        $this->postJson(
+            route('cart.store'),
+            ['identifier' => 'foo']
+        )
+        ->assertStatus(200)
+        ->assertJsonFragment([
+            'identifier' => 'foo',
+            'content' => []
+        ]);
+    }
+
+    /** @test */
+    public function itCanListManyCartsWithItems()
     {
         $carts = factory($this->cart->modelClass(), 2)->create();
 
@@ -55,9 +64,7 @@ class CartTest extends TestCase
             // within this loop, which enables us to test for unique row ID
             // hashes for each Item that is added to the cart.
 
-            $cartItem = $this->cartItem->make($cart->id, 'Foo', 1.00);
-
-            $cartItem = $this->cartItem->add($cartItem);
+            $cartItem = $this->cartItem->create($cart->id, 'Foo', 1.00);
 
             $cartItems->push($cartItem);
 
@@ -69,7 +76,7 @@ class CartTest extends TestCase
         // Ensure that the two Cart identifiers are present, as well as the
         // item (row) ID for the Cart Item in each respective Cart.
 
-        $this->get(route('cart.index'))
+        $this->getJson(route('cart.all'))
             ->assertStatus(200)
             ->assertJsonFragment([
                 'identifier' => $carts->get(0)->identifier,
@@ -86,7 +93,7 @@ class CartTest extends TestCase
     }
 
     /** @test */
-    public function itCanRetrieveCartByIdentifier()
+    public function itCanListCartByIdentifier()
     {
         $cart = factory($this->cart->modelClass())->create();
 
@@ -97,6 +104,22 @@ class CartTest extends TestCase
             route('cart.show', ['identifier' => $cart->identifier])
         )
         ->assertStatus(200)
-        ->assertJsonFragment([]);
+        ->assertJsonFragment([
+            'identifier' => $cart->identifier,
+        ])
+        ->assertJsonFragment([
+            'content' => [],
+        ]);
+    }
+
+    /** @test */
+    public function itCanDestroy()
+    {
+        $cart = factory($this->cart->modelClass())->create();
+
+        $this->deleteJson(
+            route('cart.delete', ['identifier' => $cart->identifier])
+        )
+        ->assertStatus(200);
     }
 }

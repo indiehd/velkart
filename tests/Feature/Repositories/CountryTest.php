@@ -2,7 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use IndieHD\Velkart\Contracts\CountryRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
 
 class CountryTest extends RepositoryTestCase
 {

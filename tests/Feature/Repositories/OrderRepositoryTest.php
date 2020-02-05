@@ -3,9 +3,9 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use IndieHD\Velkart\Contracts\OrderRepositoryContract;
-use IndieHD\Velkart\Contracts\ProductRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;
 
 class OrderRepositoryTest extends RepositoryTestCase
 {

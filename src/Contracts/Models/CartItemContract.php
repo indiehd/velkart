@@ -1,6 +1,6 @@
 <?php
 
-namespace IndieHD\Velkart\Contracts;
+namespace IndieHD\Velkart\Contracts\Models;
 
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 

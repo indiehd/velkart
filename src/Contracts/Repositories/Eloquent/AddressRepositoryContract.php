@@ -1,6 +1,6 @@
 <?php
 
-namespace IndieHD\Velkart\Contracts;
+namespace IndieHD\Velkart\Contracts\Repositories\Eloquent;
 
 interface AddressRepositoryContract extends BaseRepositoryContract
 {

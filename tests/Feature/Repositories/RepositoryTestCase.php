@@ -3,9 +3,8 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use IndieHD\Velkart\Contracts\BaseRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\BaseRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
-use IndieHD\Velkart\Database\Seeds\CountriesSeeder;
 
 abstract class RepositoryTestCase extends TestCase
 {

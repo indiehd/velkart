@@ -5,8 +5,8 @@ namespace IndieHD\Velkart\Repositories\Session;
 use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Support\Collection;
-use IndieHD\Velkart\Contracts\CartItemContract;
-use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
+use IndieHD\Velkart\Contracts\Models\CartItemContract;
+use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
 
 class CartItemRepository implements CartItemRepositoryContract
 {
@@ -15,27 +15,22 @@ class CartItemRepository implements CartItemRepositoryContract
         $this->cart = $cart;
     }
 
-    /*
-    public function make($attributes): CartItemContract
+    public function all(): Collection
     {
-        $item = app()->make(CartItemContract::class, [
-            'id' => $attributes['id'],
-            'name' => $attributes['name'],
-            'price' => $attributes['price'],
-        ]);
-
-        $item->setQuantity(1);
-
-        return $item;
+        return $this->cart->content();
     }
-    */
 
-    public function create($attributes): CartItem
+    public function findById($id): CartItem
+    {
+        return $this->cart->get($id);
+    }
+
+    public function create($id, string $name, $price): CartItem
     {
         $item = app()->make(CartItemContract::class, [
-            'id' => $attributes['id'],
-            'name' => $attributes['name'],
-            'price' => $attributes['price'],
+            'id' => $id,
+            'name' => $name,
+            'price' => $price,
         ]);
 
         $item->setQuantity(1);
@@ -48,7 +43,7 @@ class CartItemRepository implements CartItemRepositoryContract
         return $this->cart->update($rowId, $quantity);
     }
 
-    public function remove($rowId): void
+    public function destroy($rowId): void
     {
         $this->cart->remove($rowId);
     }

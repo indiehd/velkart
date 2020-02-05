@@ -3,7 +3,7 @@
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Contracts\AttributeRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Attribute;
 
 class AttributeRepository extends BaseRepository implements AttributeRepositoryContract

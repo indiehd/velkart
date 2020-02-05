@@ -3,7 +3,7 @@
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Contracts\OrderStatusRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\OrderStatus;
 
 class OrderStatusRepository extends BaseRepository implements OrderStatusRepositoryContract

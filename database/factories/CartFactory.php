@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Collection;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use Ramsey\Uuid\UuidFactoryInterface;
 
 $cartRepository = resolve(CartRepositoryContract::class);

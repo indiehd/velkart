@@ -2,18 +2,34 @@
 
 namespace IndieHD\Velkart\Controllers;
 
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
-use IndieHD\Velkart\Requests\StoreCart;
-use IndieHD\Velkart\Requests\UpdateCart;
+use Illuminate\Http\Request;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Requests\Cart\DestroyCart;
+use IndieHD\Velkart\Requests\Cart\StoreCart;
 use IndieHD\Velkart\Resources\CartResource;
 
-class CartController extends CartApiController
+class CartController extends ApiController
 {
+    /**
+     * @var string $repository
+     */
+    private $repository;
+
+    /**
+     * @var string $resource
+     */
+    private $resource;
+
+    /**
+     * CartController constructor.
+     */
     public function __construct()
     {
         parent::__construct();
 
-        $this->repo = resolve($this->repository());
+        $this->repository = resolve($this->repository());
+
+        $this->resource = $this->resource();
     }
 
     /**
@@ -37,7 +53,7 @@ class CartController extends CartApiController
     }
 
     /**
-     * Sets the StoreRequest to resolve for validation during a store request
+     * Sets the StoreRequest to resolve for validation during a store request.
      *
      * @return string
      */
@@ -46,23 +62,50 @@ class CartController extends CartApiController
         return StoreCart::class;
     }
 
-    /**
-     * Sets the UpdateRequest to resolve for validation during a update request
-     *
-     * @return string
-     */
-    public function updateRequest()
-    {
-        return UpdateCart::class;
-    }
-
     public function destroyRequest()
     {
-        // TODO: Implement destroyRequest() method.
+        return DestroyCart::class;
     }
 
+    /**
+     * @param $identifier
+     * @return mixed
+     */
     public function showByIdentifier($identifier)
     {
-        return $this->repo->findByIdentifier($identifier);
+        return new $this->resource(
+            $this->repository->findByIdentifier($identifier)
+        );
+    }
+
+    /**
+     * Store a newly created resource.
+     *
+     * @param Request $request
+     * @return JsonResource
+     */
+    public function store(Request $request)
+    {
+        resolve($this->storeRequest());
+
+        return new $this->resource($this->repository->create(
+            $request->json('identifier')
+        ));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $identifier)
+    {
+        resolve($this->destroyRequest());
+
+        $this->repository->delete($identifier);
+
+        return response(['success' => true], 200);
     }
 }

@@ -3,7 +3,7 @@
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Contracts\CountryRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Country;
 
 class CountryRepository extends BaseRepository implements CountryRepositoryContract

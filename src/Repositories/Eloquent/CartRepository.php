@@ -4,9 +4,8 @@ namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Gloudemans\Shoppingcart\Cart;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Cart as CartModel;
 
 class CartRepository implements CartRepositoryContract
@@ -63,16 +62,16 @@ class CartRepository implements CartRepositoryContract
         return $this->cartModel->findOrFail($id);
     }
 
-    public function findByIdentifier(string $identifier): Collection
+    public function findByIdentifier(string $identifier): CartModel
     {
-        $this->cart->restore($identifier);
-
-        return $this->cart->content();
+        return $this->cartModel->where('identifier', $identifier)->firstOrFail();
     }
 
-    public function create(string $identifier): void
+    public function create(string $identifier): CartModel
     {
         $this->cart->store($identifier);
+
+        return $this->findByIdentifier($identifier);
     }
 
     public function delete(string $identifier)

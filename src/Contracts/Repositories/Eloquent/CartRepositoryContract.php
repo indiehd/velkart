@@ -1,9 +1,8 @@
 <?php
 
-namespace IndieHD\Velkart\Contracts;
+namespace IndieHD\Velkart\Contracts\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use IndieHD\Velkart\Models\Eloquent\Cart;
 
 interface CartRepositoryContract
@@ -44,16 +43,16 @@ interface CartRepositoryContract
      * Get a record by its long-form identifier.
      *
      * @param string $identifier
-     * @return Collection
+     * @return Cart
      */
-    public function findByIdentifier(string $identifier): Collection;
+    public function findByIdentifier(string $identifier): Cart;
 
     /**
      * Create a new record.
      *
      * @param string $identifier
      */
-    public function create(string $identifier): void;
+    public function create(string $identifier): Cart;
 
     /**
      * Destroy an existing record by its long-form identifier.

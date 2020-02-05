@@ -4,7 +4,7 @@ namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CategoryRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Category;
 
 class CategoryRepository extends BaseRepository implements CategoryRepositoryContract

@@ -2,12 +2,11 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use Illuminate\Support\Collection;
 use IndieHD\Velkart\Contracts\BaseRepositoryContract;
 use IndieHD\Velkart\Contracts\CartItemContract;
-use IndieHD\Velkart\Contracts\CartItemRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
-use IndieHD\Velkart\Contracts\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
 use Ramsey\Uuid\UuidFactoryInterface;
 
@@ -72,18 +71,18 @@ class CartTest extends TestCase
     /** @test */
     public function itCanCreate()
     {
-        $identifier = $this->uuid->uuid4();
+        $identifier = 'foo';
 
         $this->getRepository()->create($identifier);
 
         $cart = $this->getRepository()->findByIdentifier($identifier);
 
         $this->assertInstanceOf(
-            Collection::class,
+            $this->getRepository()->modelClass(),
             $cart
         );
 
-        $this->assertTrue($cart->isEmpty());
+        $this->assertEquals($identifier, $cart->identifier);
     }
 
     /** @test */
