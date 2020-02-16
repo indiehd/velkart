@@ -1,7 +1,7 @@
 <?php
 
-use IndieHD\Velkart\Contracts\OrderRepositoryContract;
-use IndieHD\Velkart\Contracts\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
 
 $order = resolve(OrderRepositoryContract::class);
 $cart = resolve(CartRepositoryContract::class);

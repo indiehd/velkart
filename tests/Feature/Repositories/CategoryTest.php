@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Repositories;
 
-use IndieHD\Velkart\Contracts\CategoryRepositoryContract;
-use IndieHD\Velkart\Contracts\ProductRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CategoryRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;
 use IndieHD\Velkart\Tests\Feature\Repositories\RepositoryTestCase;
 
 class CategoryTest extends RepositoryTestCase

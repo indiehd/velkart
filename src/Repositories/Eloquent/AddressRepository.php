@@ -3,7 +3,7 @@
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Contracts\AddressRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AddressRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Address;
 
 class AddressRepository extends BaseRepository implements AddressRepositoryContract

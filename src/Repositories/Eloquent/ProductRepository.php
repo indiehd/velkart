@@ -2,13 +2,13 @@
 
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-use IndieHD\Velkart\Traits\UploadsFiles;
 use Illuminate\Database\DatabaseManager;
-use IndieHD\Velkart\Contracts\ProductRepositoryContract;
+use Illuminate\Database\Eloquent\Model;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Product;
+use IndieHD\Velkart\Traits\UploadsFiles;
 
-class ProductRepository extends BaseRepository Implements ProductRepositoryContract
+class ProductRepository extends BaseRepository implements ProductRepositoryContract
 {
     use UploadsFiles;
 

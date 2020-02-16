@@ -2,7 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use IndieHD\Velkart\Contracts\AddressRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AddressRepositoryContract;
 
 class AddressTest extends RepositoryTestCase
 {

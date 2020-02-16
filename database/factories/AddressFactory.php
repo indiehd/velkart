@@ -1,7 +1,7 @@
 <?php
 
-use IndieHD\Velkart\Contracts\AddressRepositoryContract;
-use IndieHD\Velkart\Contracts\CountryRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AddressRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
 
 $address = resolve(AddressRepositoryContract::class);
 $country = resolve(CountryRepositoryContract::class);

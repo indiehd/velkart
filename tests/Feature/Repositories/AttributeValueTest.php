@@ -2,8 +2,8 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use IndieHD\Velkart\Contracts\AttributeRepositoryContract;
-use IndieHD\Velkart\Contracts\AttributeValueRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeValueRepositoryContract;
 
 class AttributeValueTest extends RepositoryTestCase
 {
