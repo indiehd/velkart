@@ -1,7 +1,7 @@
 {
   "name": "indiehd/velkart",
-  "description": "An extensible shopping cart, order management, and payment processing system built upon clean-coding principles and designed for Laravel.",
-  "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3",
+  "description": "An extensible shopping cart built upon clean-coding principles and designed for Laravel.",
+  "license": "GNU Affero General Public License v3.0 or later",
   "authors": [
     {
       "name": "Everett M Wiley (Poppabear)",
