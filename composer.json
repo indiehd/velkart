@@ -13,9 +13,15 @@
     }
   ],
   "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ChrisThompsonTLDR/baum.git"
+    }
+  ],
   "require": {
     "bumbummen99/shoppingcart": "^2.0",
-    "baum/baum": "v2.x-dev",
+    "baum/baum": "v2.x-dev#a5944ebfd605688213954fd19e1aff0e8fafb132",
     "illuminate/support": "^7.0"
   },
   "autoload": {
