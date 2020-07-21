@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
             $table->string('cover')->nullable();
             $table->unsignedInteger('status')->default(0);
 
-            $table->integer('parent_id')->unsigned()->nullable()->index();
+            $table->unsignedBigInteger('parent_id')->nullable()->index();
             $table->foreign('parent_id')->references('id')->on('categories');
             $table->integer('left')->unsigned()->nullable()->index();
             $table->integer('right')->unsgined()->nullable()->index();
