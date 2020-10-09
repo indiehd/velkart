@@ -21,7 +21,7 @@ class CartTest extends TestCase
     protected $cartItem;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setUp(): void
     {
@@ -46,7 +46,7 @@ class CartTest extends TestCase
         ->assertStatus(200)
         ->assertJsonFragment([
             'identifier' => 'foo',
-            'content' => []
+            'content'    => [],
         ]);
     }
 
@@ -82,13 +82,13 @@ class CartTest extends TestCase
                 'identifier' => $carts->get(0)->identifier,
             ])
             ->assertJsonFragment([
-                'identifier' => $carts->get(1)->identifier
+                'identifier' => $carts->get(1)->identifier,
             ])
             ->assertJsonFragment([
-                'rowId' => $cartItems->get(0)->rowId
+                'rowId' => $cartItems->get(0)->rowId,
             ])
             ->assertJsonFragment([
-                'rowId' => $cartItems->get(1)->rowId
+                'rowId' => $cartItems->get(1)->rowId,
             ]);
     }
 

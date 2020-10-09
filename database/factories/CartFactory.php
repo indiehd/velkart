@@ -8,12 +8,11 @@ $cartRepository = resolve(CartRepositoryContract::class);
 $uuidFactory = resolve(UuidFactoryInterface::class);
 
 $factory->define($cartRepository->modelClass(), function (Faker\Generator $faker) use ($uuidFactory) {
-
     $identifier = $uuidFactory->uuid4();
 
     return [
         'identifier' => $identifier->toString(),
-        'instance' => 'default',
-        'content' => serialize(new Collection)
+        'instance'   => 'default',
+        'content'    => serialize(new Collection()),
     ];
 });

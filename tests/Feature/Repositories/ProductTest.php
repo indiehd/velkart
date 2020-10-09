@@ -32,7 +32,7 @@ class ProductTest extends RepositoryTestCase
         $product = $this->create();
 
         $updated = $this->getRepository()->update($product->id, [
-            'price' => 799.99
+            'price' => 799.99,
         ]);
 
         $this->assertTrue($updated, 'Product did NOT update');

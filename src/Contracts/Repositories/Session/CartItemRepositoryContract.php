@@ -14,6 +14,7 @@ interface CartItemRepositoryContract
 
     /**
      * @param $id
+     *
      * @return CartItem
      */
     public function findById($id): CartItem;
@@ -22,6 +23,7 @@ interface CartItemRepositoryContract
      * @param $id
      * @param string $name
      * @param $price
+     *
      * @return CartItem
      */
     public function create($id, string $name, $price): CartItem;
@@ -29,6 +31,7 @@ interface CartItemRepositoryContract
     /**
      * @param $rowId
      * @param $props
+     *
      * @return mixed
      */
     public function update($rowId, $props);

@@ -19,7 +19,7 @@ class CountryTest extends RepositoryTestCase
         $model = $this->create();
 
         $update = [
-            'name' => 'Foo Country'
+            'name' => 'Foo Country',
         ];
 
         $updated = $this->getRepository()->update($model->id, $update);

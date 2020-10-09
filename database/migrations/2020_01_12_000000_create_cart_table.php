@@ -21,6 +21,7 @@ class CreateCartTable extends Migration
             $table->unique(['identifier', 'instance']);
         });
     }
+
     /**
      * Reverse the migrations.
      */

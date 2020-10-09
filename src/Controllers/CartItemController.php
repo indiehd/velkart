@@ -12,12 +12,12 @@ use IndieHD\Velkart\Resources\CartItemResource;
 class CartItemController extends ApiController
 {
     /**
-     * @var string $repository
+     * @var string
      */
     private $repository;
 
     /**
-     * @var string $resource
+     * @var string
      */
     private $resource;
 
@@ -83,6 +83,7 @@ class CartItemController extends ApiController
 
     /**
      * @param $id
+     *
      * @return JsonResource
      */
     public function showById($id)
@@ -96,6 +97,7 @@ class CartItemController extends ApiController
      * Store a newly created resource.
      *
      * @param Request $request
+     *
      * @return JsonResource
      */
     public function store(Request $request)
@@ -113,7 +115,8 @@ class CartItemController extends ApiController
      * Update the specified resource.
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
+     *
      * @return JsonResource
      */
     public function update(Request $request)
@@ -131,7 +134,8 @@ class CartItemController extends ApiController
     /**
      * Remove the specified resource.
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)

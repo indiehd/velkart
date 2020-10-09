@@ -26,8 +26,8 @@ class CartRepository implements CartRepositoryContract
     protected $cartItem;
 
     /**
-     * @param CartModel $cartModel
-     * @param Cart $cart
+     * @param CartModel                  $cartModel
+     * @param Cart                       $cart
      * @param CartItemRepositoryContract $cartItem
      */
     public function __construct(

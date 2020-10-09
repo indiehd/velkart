@@ -2,8 +2,8 @@
 
 namespace IndieHD\Velkart\Database\Seeds;
 
-use IndieHD\Velkart\Models\Eloquent\Country;
 use Illuminate\Database\Seeder as BaseSeeder;
+use IndieHD\Velkart\Models\Eloquent\Country;
 
 class CountriesSeeder extends BaseSeeder
 {
@@ -17,7 +17,7 @@ class CountriesSeeder extends BaseSeeder
         foreach ($this->countries() as $code => $country) {
             Country::create([
                 'code' => $code,
-                'name' => $country
+                'name' => $country,
             ]);
         }
     }
