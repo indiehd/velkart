@@ -15,6 +15,7 @@ class CountryRepository extends BaseRepository implements CountryRepositoryContr
 
     /**
      * CountryRepository constructor.
+     *
      * @param Country $country
      */
     public function __construct(Country $country)

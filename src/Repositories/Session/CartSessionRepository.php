@@ -14,6 +14,7 @@ class CartSessionRepository implements CartSessionRepositoryContract
 
     /**
      * CartSessionRepository constructor.
+     *
      * @param Cart $cart
      */
     public function __construct(

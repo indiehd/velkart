@@ -16,13 +16,13 @@ abstract class TestCase extends OrchestraTestCase
     protected $faker;
 
     /**
-     * Set up the test
+     * Set up the test.
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__ . '/../database/factories');
+        $this->withFactories(__DIR__.'/../database/factories');
 
         $this->faker = Factory::create();
         $this->session = $this->app->make('session');
@@ -40,8 +40,8 @@ abstract class TestCase extends OrchestraTestCase
     {
         $app['config']->set('database.default', 'testdb');
         $app['config']->set('database.connections.testdb', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
+            'driver'                  => 'sqlite',
+            'database'                => ':memory:',
             'foreign_key_constraints' => true,
         ]);
     }

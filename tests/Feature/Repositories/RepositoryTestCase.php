@@ -16,14 +16,16 @@ abstract class RepositoryTestCase extends TestCase
     }
 
     /**
-     * @return BaseRepositoryContract
      * @throws \Exception
+     *
+     * @return BaseRepositoryContract
      */
     protected function getRepository(): BaseRepositoryContract
     {
         if ($this->repo === null) {
             throw new \Exception('The repository has not been set! See setRepository()');
         }
+
         return $this->repo;
     }
 
@@ -42,7 +44,7 @@ abstract class RepositoryTestCase extends TestCase
     }
 
     /**
-     * This method should be implemented by all repository tests as a @test
+     * This method should be implemented by all repository tests as a @test.
      */
     abstract public function itCanUpdate();
 

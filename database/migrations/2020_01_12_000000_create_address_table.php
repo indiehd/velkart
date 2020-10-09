@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAddressTable extends Migration
 {
@@ -26,8 +26,10 @@ class CreateAddressTable extends Migration
             $table->unsignedInteger('country_id')->index();
 
             if (Schema::hasTable(config('velkart.user_table', 'users'))) {
-                $table->foreign('customer_id')->references(config('velkart.user_id_column',
-                    'id'))->on(config('velkart.user_table', 'users'));
+                $table->foreign('customer_id')->references(config(
+                    'velkart.user_id_column',
+                    'id'
+                ))->on(config('velkart.user_table', 'users'));
             }
 
             $table->integer('status')->default(0);

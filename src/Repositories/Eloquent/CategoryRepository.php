@@ -21,7 +21,8 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryCon
 
     /**
      * CategoryRepository constructor.
-     * @param Category $category
+     *
+     * @param Category        $category
      * @param DatabaseManager $db
      */
     public function __construct(Category $category, DatabaseManager $db)

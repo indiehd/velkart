@@ -24,7 +24,7 @@ class AttributeTest extends RepositoryTestCase
         $attribute = $this->create();
 
         $updated = $this->getRepository()->update($attribute->id, [
-            'name' => 'attribute'
+            'name' => 'attribute',
         ]);
 
         $this->assertTrue($updated, 'Attribute did NOT update');

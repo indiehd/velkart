@@ -38,7 +38,7 @@ class ProductImageTest extends RepositoryTestCase
 
         $this->create([
             'product_id' => 5,
-            'src' => 'somerandomstring'
+            'src'        => 'somerandomstring',
         ]);
     }
 
@@ -69,7 +69,7 @@ class ProductImageTest extends RepositoryTestCase
         $newPath = $this->storeFile($newImage);
 
         $this->getRepository()->update($productImage->id, [
-            'path' => $newPath
+            'path' => $newPath,
         ]);
 
         $oldFileExists = $this->filesystem->disk('public')->exists($oldFile);
@@ -81,7 +81,7 @@ class ProductImageTest extends RepositoryTestCase
     public function itFailsToUpdateWhenProductImageIdIsInvalid()
     {
         $updated = $this->getRepository()->update(5, [
-            'src' => 'productImage.jpg'
+            'src' => 'productImage.jpg',
         ]);
 
         $this->assertFalse($updated, 'ProductImage DID update');

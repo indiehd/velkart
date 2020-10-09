@@ -28,19 +28,21 @@ class CartSessionTest extends TestCase
     }
 
     /**
-     * @return BaseRepositoryContract
      * @throws \Exception
+     *
+     * @return BaseRepositoryContract
      */
     protected function getRepository(): CartSessionRepositoryContract
     {
         if ($this->repo === null) {
             throw new \Exception('The repository has not been set! See setRepository()');
         }
+
         return $this->repo;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setUp(): void
     {

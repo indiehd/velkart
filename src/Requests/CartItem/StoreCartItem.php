@@ -24,8 +24,8 @@ class StoreCartItem extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
-            'name' => 'required',
+            'id'    => 'required',
+            'name'  => 'required',
             'price' => 'required',
         ];
     }

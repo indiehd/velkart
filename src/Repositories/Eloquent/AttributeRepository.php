@@ -15,6 +15,7 @@ class AttributeRepository extends BaseRepository implements AttributeRepositoryC
 
     /**
      * AttributeRepository constructor.
+     *
      * @param Attribute $attribute
      */
     public function __construct(Attribute $attribute)

@@ -28,8 +28,8 @@ class CartItemRepository implements CartItemRepositoryContract
     public function create($id, string $name, $price): CartItem
     {
         $item = app()->make(CartItemContract::class, [
-            'id' => $id,
-            'name' => $name,
+            'id'    => $id,
+            'name'  => $name,
             'price' => $price,
         ]);
 

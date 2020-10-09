@@ -15,6 +15,7 @@ class OrderStatusRepository extends BaseRepository implements OrderStatusReposit
 
     /**
      * OrderStatusRepository constructor.
+     *
      * @param OrderStatus $orderStatus
      */
     public function __construct(OrderStatus $orderStatus)

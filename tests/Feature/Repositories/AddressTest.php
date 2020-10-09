@@ -41,7 +41,7 @@ class AddressTest extends RepositoryTestCase
         $model = $this->create();
 
         $update = [
-            'address_1' => '1 Foo St.'
+            'address_1' => '1 Foo St.',
         ];
 
         $updated = $this->getRepository()->update($model->id, $update);

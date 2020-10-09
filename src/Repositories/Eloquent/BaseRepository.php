@@ -18,11 +18,12 @@ abstract class BaseRepository
     abstract public function modelClass(): string;
 
     /**
-     * List all the records
+     * List all the records.
      *
      * @param string $order
      * @param string $sort
-     * @param array $columns
+     * @param array  $columns
+     *
      * @return iterable
      */
     public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable
@@ -31,11 +32,13 @@ abstract class BaseRepository
     }
 
     /**
-     * Finds a record by its id
+     * Finds a record by its id.
      *
      * @param int $id
-     * @return object
+     *
      * @throws ModelNotFoundException
+     *
+     * @return object
      */
     public function findById(int $id): object
     {
@@ -43,9 +46,10 @@ abstract class BaseRepository
     }
 
     /**
-     * Create a new record
+     * Create a new record.
      *
      * @param array $attributes
+     *
      * @return object
      */
     public function create(array $attributes): object
@@ -54,22 +58,25 @@ abstract class BaseRepository
     }
 
     /**
-     * Updates a record
+     * Updates a record.
      *
-     * @param int $id
+     * @param int   $id
      * @param array $attributes
+     *
      * @return bool
      */
     public function update(int $id, array $attributes): bool
     {
         $model = $this->model()->find($id);
+
         return $model->update($attributes);
     }
 
     /**
-     * Deletes a record
+     * Deletes a record.
      *
      * @param int $id
+     *
      * @return bool
      */
     public function delete(int $id): bool

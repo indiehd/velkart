@@ -9,7 +9,7 @@ interface CartItemContract
     /**
      * Returns the formatted weight.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -24,7 +24,7 @@ interface CartItemContract
     /**
      * Returns the formatted price without TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -39,7 +39,7 @@ interface CartItemContract
     /**
      * Returns the formatted price with discount applied.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -54,7 +54,7 @@ interface CartItemContract
     /**
      * Returns the formatted price with TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -70,7 +70,7 @@ interface CartItemContract
      * Returns the formatted subtotal.
      * Subtotal is price for whole CartItem without TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -86,7 +86,7 @@ interface CartItemContract
      * Returns the formatted total.
      * Total is price for whole CartItem with TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -101,7 +101,7 @@ interface CartItemContract
     /**
      * Returns the formatted tax.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -116,7 +116,7 @@ interface CartItemContract
     /**
      * Returns the formatted tax.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -131,7 +131,7 @@ interface CartItemContract
     /**
      * Returns the formatted discount.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -146,7 +146,7 @@ interface CartItemContract
     /**
      * Returns the formatted total discount for this cart item.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *

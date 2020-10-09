@@ -17,17 +17,19 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('cart_id')->unique()->index();
             $table->unsignedBigInteger('customer_id')->index()->nullable();
-            #$table->unsignedBigInteger('address_id')->index()->nullable();
-            #$table->unsignedInteger('order_status_id')->index();
+            //$table->unsignedBigInteger('address_id')->index()->nullable();
+            //$table->unsignedInteger('order_status_id')->index();
 
             if (Schema::hasTable(config('velkart.user_table', 'users'))) {
-                $table->foreign('customer_id')->references(config('velkart.user_id_column',
-                    'id'))->on(config('velkart.user_table', 'users'));
+                $table->foreign('customer_id')->references(config(
+                    'velkart.user_id_column',
+                    'id'
+                ))->on(config('velkart.user_table', 'users'));
             }
 
             $table->foreign('cart_id')->references('id')->on('carts');
-            #$table->foreign('address_id')->references('id')->on('addresses');
-            #$table->foreign('order_status_id')->references('id')->on('order_statuses');
+            //$table->foreign('address_id')->references('id')->on('addresses');
+            //$table->foreign('order_status_id')->references('id')->on('order_statuses');
             $table->timestamps();
         });
     }

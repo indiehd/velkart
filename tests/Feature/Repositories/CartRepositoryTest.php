@@ -50,14 +50,16 @@ class CartRepositoryTest extends TestCase
     }
 
     /**
-     * @return CartRepositoryContract
      * @throws \Exception
+     *
+     * @return CartRepositoryContract
      */
     protected function getRepository(): CartRepositoryContract
     {
         if ($this->repo === null) {
             throw new \Exception('The repository has not been set! See setRepository()');
         }
+
         return $this->repo;
     }
 
@@ -158,7 +160,7 @@ class CartRepositoryTest extends TestCase
 
         $this->getRepository()->delete($model->identifier);
 
-        #$this->expectException(ModelNotFoundException::class);
+        //$this->expectException(ModelNotFoundException::class);
 
         $this->assertDatabaseMissing(
             $this->getRepository()->model()->getTable(),

@@ -23,7 +23,7 @@ class AttributeValueTest extends RepositoryTestCase
         $attributeValue = $this->create();
 
         $updated = $this->getRepository()->update($attributeValue->id, [
-            'value' => 'new value'
+            'value' => 'new value',
         ]);
 
         $this->assertTrue($updated, 'Attribute did NOT update');

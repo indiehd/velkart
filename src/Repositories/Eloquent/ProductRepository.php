@@ -24,7 +24,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
 
     /**
      * ProductRepository constructor.
-     * @param Product $product
+     *
+     * @param Product         $product
      * @param DatabaseManager $db
      */
     public function __construct(Product $product, DatabaseManager $db)
@@ -50,11 +51,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
     }
 
     /**
-     * Deletes a Product
+     * Deletes a Product.
      *
      * @param int $id
-     * @return bool
+     *
      * @throws \Throwable
+     *
+     * @return bool
      */
     public function delete(int $id): bool
     {
@@ -66,10 +69,12 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
             $model->delete();
         } catch (\Exception $e) {
             $this->db->rollBack();
+
             return false;
         }
 
         $this->db->commit();
+
         return true;
     }
 }
