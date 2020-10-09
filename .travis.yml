@@ -10,7 +10,7 @@ addons:
 sudo: false
 
 before_script:
-  - composer install --prefer-source --no-interaction
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction
 
 before_install:
   - mysql -e 'CREATE DATABASE velkart_test;'
