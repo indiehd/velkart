@@ -36,12 +36,12 @@ class VelkartServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadFactoriesFrom(__DIR__ . '/../database/factories');
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadFactoriesFrom(__DIR__.'/../database/factories');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishes([
-            __DIR__ . '/Config/cart.php' => config_path('velkart.cart.php'),
+            __DIR__.'/Config/cart.php' => config_path('velkart.cart.php'),
         ]);
 
         config(['cart' => array_merge_recursive(config('cart') ?? [], config('velkart.cart'))]);
@@ -77,7 +77,7 @@ class VelkartServiceProvider extends ServiceProvider
             ->give(1.00);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/Config/cart.php',
+            __DIR__.'/Config/cart.php',
             'velkart.cart'
         );
     }

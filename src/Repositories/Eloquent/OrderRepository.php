@@ -15,6 +15,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryContract
 
     /**
      * OrderRepository constructor.
+     *
      * @param Order $order
      */
     public function __construct(Order $order)

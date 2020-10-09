@@ -30,9 +30,10 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
 
     /**
      * ProductImageRepository constructor.
-     * @param ProductImage $productImage
+     *
+     * @param ProductImage       $productImage
      * @param FilesystemContract $filesystem
-     * @param DatabaseManager $db
+     * @param DatabaseManager    $db
      */
     public function __construct(ProductImage $productImage, FilesystemContract $filesystem, DatabaseManager $db)
     {
@@ -58,12 +59,14 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
     }
 
     /**
-     * Updates A Product Image
+     * Updates A Product Image.
      *
-     * @param int $id
+     * @param int   $id
      * @param array $attributes
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function update(int $id, array $attributes): bool
     {
@@ -77,21 +80,25 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
             if ($model->update($attributes)) {
                 if ($this->filesystem->disk($origDisk)->delete($origPath)) {
                     $this->db->commit();
+
                     return true;
                 }
             }
         }
 
         $this->db->rollBack();
+
         return false;
     }
 
     /**
-     * Deletes a Product Image
+     * Deletes a Product Image.
      *
      * @param int $id
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function delete(int $id): bool
     {
@@ -107,10 +114,12 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
             }
         } catch (\Exception $e) {
             $this->db->rollBack();
+
             return false;
         }
 
         $this->db->commit();
+
         return true;
     }
 }

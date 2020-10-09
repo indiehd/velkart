@@ -8,9 +8,8 @@ trait UploadsFiles
 {
     /**
      * @param UploadedFile $file
-     *
-     * @param string $folder
-     * @param string $disk
+     * @param string       $folder
+     * @param string       $disk
      *
      * @return false|string
      */

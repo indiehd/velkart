@@ -26,7 +26,8 @@ interface CartRepositoryContract
      *
      * @param string $order
      * @param string $sort
-     * @param array $columns
+     * @param array  $columns
+     *
      * @return iterable
      */
     public function all(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable;
@@ -35,6 +36,7 @@ interface CartRepositoryContract
      * Get a record by its ID.
      *
      * @param $id
+     *
      * @return Cart
      */
     public function findById($id): Cart;
@@ -43,6 +45,7 @@ interface CartRepositoryContract
      * Get a record by its long-form identifier.
      *
      * @param string $identifier
+     *
      * @return Cart
      */
     public function findByIdentifier(string $identifier): Cart;
@@ -58,6 +61,7 @@ interface CartRepositoryContract
      * Destroy an existing record by its long-form identifier.
      *
      * @param string $identifier
+     *
      * @return mixed
      */
     public function delete(string $identifier);

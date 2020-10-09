@@ -15,6 +15,7 @@ class AttributeValueRepository extends BaseRepository implements AttributeValueR
 
     /**
      * AttributeValueRepository constructor.
+     *
      * @param AttributeValue $attributeValue
      */
     public function __construct(AttributeValue $attributeValue)

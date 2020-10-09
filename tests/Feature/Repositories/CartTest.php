@@ -3,7 +3,6 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use IndieHD\Velkart\Contracts\BaseRepositoryContract;
-use IndieHD\Velkart\Contracts\CartItemContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
@@ -41,19 +40,21 @@ class CartTest extends TestCase
     }
 
     /**
-     * @return BaseRepositoryContract
      * @throws \Exception
+     *
+     * @return BaseRepositoryContract
      */
     protected function getRepository(): CartRepositoryContract
     {
         if ($this->repo === null) {
             throw new \Exception('The repository has not been set! See setRepository()');
         }
+
         return $this->repo;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setUp(): void
     {

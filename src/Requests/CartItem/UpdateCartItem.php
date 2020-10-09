@@ -25,7 +25,7 @@ class UpdateCartItem extends FormRequest
     {
         return [
             'rowId' => 'required',
-            'qty' => 'required|numeric',
+            'qty'   => 'required|numeric',
         ];
     }
 }

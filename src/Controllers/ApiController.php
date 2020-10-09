@@ -7,38 +7,38 @@ use Illuminate\Http\Request;
 abstract class ApiController extends Controller
 {
     /**
-     * @var string $repository
+     * @var string
      */
     private $repository;
 
     /**
-     * @var string $resource
+     * @var string
      */
     private $resource;
 
     /**
-     * Should return the <RepositoryInterface>::class
+     * Should return the <RepositoryInterface>::class.
      *
      * @return string
      */
     abstract public function repository();
 
     /**
-     * Should return the <Resource>::class
+     * Should return the <Resource>::class.
      *
      * @return string
      */
     abstract public function resource();
 
     /**
-     * Should return <StoreRequest>::class
+     * Should return <StoreRequest>::class.
      *
      * @return string
      */
     abstract public function storeRequest();
 
     /**
-     * Should return <DestroyRequest>::class
+     * Should return <DestroyRequest>::class.
      *
      * @return string
      */
@@ -58,6 +58,7 @@ abstract class ApiController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function list(Request $request)
