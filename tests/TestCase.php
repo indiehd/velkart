@@ -22,8 +22,6 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/../database/factories');
-
         $this->faker = Factory::create();
         $this->session = $this->app->make('session');
         $this->events = $this->app->make('events');

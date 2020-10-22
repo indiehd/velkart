@@ -36,7 +36,7 @@ class AttributeTest extends RepositoryTestCase
     {
         $attribute = $this->create();
 
-        $values = factory($this->attributeValue->modelClass(), 2)->make();
+        $values = $this->attributeValue->modelClass()::factory()->count(2)->make();
 
         $attribute->values()->saveMany($values);
 

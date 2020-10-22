@@ -32,7 +32,7 @@ abstract class RepositoryTestCase extends TestCase
     protected function create($params = null): object
     {
         if ($params === null) {
-            $params = factory($this->getRepository()->modelClass())->make()->toArray();
+            $params = $this->getRepository()->modelClass()::factory()->make()->toArray();
         }
 
         return $this->getRepository()->create($params);
@@ -40,7 +40,7 @@ abstract class RepositoryTestCase extends TestCase
 
     protected function createMany(int $count = 3): iterable
     {
-        return factory($this->getRepository()->modelClass(), $count)->create();
+        return $this->getRepository()->modelClass()::factory()->count($count)->create();
     }
 
     /**

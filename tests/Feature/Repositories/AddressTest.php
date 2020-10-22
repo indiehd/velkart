@@ -16,7 +16,11 @@ class AddressTest extends RepositoryTestCase
     protected function create($params = null): object
     {
         if ($params === null) {
-            $params = factory($this->getRepository()->modelClass())->states(['withCountry'])->make()->toArray();
+            $params = $this->getRepository()
+                ->modelClass()::factory()
+                ->withCountry()
+                ->make()
+                ->toArray();
         }
 
         return $this->getRepository()->create($params);
@@ -24,16 +28,20 @@ class AddressTest extends RepositoryTestCase
 
     protected function createMany(int $count = 3): iterable
     {
-        return factory($this->getRepository()->modelClass(), $count)->states(['withCountry'])->create();
+        return $this->getRepository()
+            ->modelClass()::factory()
+            ->count(3)
+            ->withCountry()
+            ->create();
     }
 
-//    /** @test */
-//    public function itCanCreate()
-//    {
-//        $model = $this->create(null, ['withCountry']);
-//
-//        $this->assertNotNull($model);
-//    }
+    //    /** @test */
+    //    public function itCanCreate()
+    //    {
+    //        $model = $this->create(null, ['withCountry']);
+    //
+    //        $this->assertNotNull($model);
+    //    }
 
     /** @test */
     public function itCanUpdate()
@@ -50,37 +58,37 @@ class AddressTest extends RepositoryTestCase
         $this->assertDatabaseHas($this->getRepository()->model()->getTable(), $update);
     }
 
-//    /** @test */
-//    public function itCanListAllTheModels()
-//    {
-//        $this->assertCount($this->createMany(3, ['withCountry'])->count(), $this->getRepository()->list());
-//    }
-//
-//    /** @test */
-//    public function itCanFindAModelByItsId()
-//    {
-//        $model = $this->create(null, ['withCountry']);
-//
-//        $this->assertNotNull($this->getRepository()->findById($model->id));
-//    }
-//
-//    /** @test */
-//    public function itCanListByIdInDescendingOrder()
-//    {
-//        $models = $this->createMany(3, ['withCountry']);
-//
-//        $ids = $models->sortByDesc('id')->pluck('id');
-//
-//        $this->assertEquals($ids, $this->getRepository()->list('id', 'desc')->pluck('id'));
-//    }
-//
-//    /** @test */
-//    public function itCanListByIdInAscendingOrder()
-//    {
-//        $models = $this->createMany(3, ['withCountry']);
-//
-//        $ids = $models->sortBy('id')->pluck('id');
-//
-//        $this->assertEquals($ids, $this->getRepository()->list('id', 'asc')->pluck('id'));
-//    }
+    //    /** @test */
+    //    public function itCanListAllTheModels()
+    //    {
+    //        $this->assertCount($this->createMany(3, ['withCountry'])->count(), $this->getRepository()->list());
+    //    }
+    //
+    //    /** @test */
+    //    public function itCanFindAModelByItsId()
+    //    {
+    //        $model = $this->create(null, ['withCountry']);
+    //
+    //        $this->assertNotNull($this->getRepository()->findById($model->id));
+    //    }
+    //
+    //    /** @test */
+    //    public function itCanListByIdInDescendingOrder()
+    //    {
+    //        $models = $this->createMany(3, ['withCountry']);
+    //
+    //        $ids = $models->sortByDesc('id')->pluck('id');
+    //
+    //        $this->assertEquals($ids, $this->getRepository()->list('id', 'desc')->pluck('id'));
+    //    }
+    //
+    //    /** @test */
+    //    public function itCanListByIdInAscendingOrder()
+    //    {
+    //        $models = $this->createMany(3, ['withCountry']);
+    //
+    //        $ids = $models->sortBy('id')->pluck('id');
+    //
+    //        $this->assertEquals($ids, $this->getRepository()->list('id', 'asc')->pluck('id'));
+    //    }
 }

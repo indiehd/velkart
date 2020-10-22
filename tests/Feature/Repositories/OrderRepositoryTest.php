@@ -32,9 +32,9 @@ class OrderRepositoryTest extends RepositoryTestCase
     /** @test */
     public function itCanUpdate()
     {
-        $order = factory($this->getRepository()->modelClass())->create();
+        $order = $this->factory()->create();
 
-        $status = factory($this->orderStatus->modelClass())->create();
+        $status = $this->orderStatus->factory()->create();
 
         $updates = [
             'order_status_id' => $status->id,
@@ -49,9 +49,9 @@ class OrderRepositoryTest extends RepositoryTestCase
     /** @test */
     public function itHasManyProducts()
     {
-        $order = factory($this->getRepository()->modelClass())->create();
+        $order = $this->factory()->create();
 
-        $products = factory($this->product->modelClass(), 2)->create();
+        $products = $this->product->factory()->count(2)->make();
 
         $products->each(function ($product) use ($order) {
             $order->products()->attach($product->id, ['price' => $product->price]);

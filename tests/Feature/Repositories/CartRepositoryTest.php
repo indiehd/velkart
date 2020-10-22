@@ -65,12 +65,12 @@ class CartRepositoryTest extends TestCase
 
     protected function create(): object
     {
-        return factory($this->getRepository()->modelClass())->create();
+        return $this->getRepository()->modelClass()::factory()->create();
     }
 
     protected function createMany(int $count = 3): iterable
     {
-        return factory($this->getRepository()->modelClass(), $count)->create();
+        return $this->getRepository()->modelClass()::factory()->count($count)->create();
     }
 
     /** @test */
