@@ -25,7 +25,7 @@ class ProductImageFactory extends Factory
     {
         $product = Product::factory()->create();
 
-        $file = UploadedFile::fake()->image($this->faker->word . '.jpg', 600, 600);
+        $file = UploadedFile::fake()->image($this->faker->word.'.jpg', 600, 600);
 
         return [
             'product_id' => $product->id,

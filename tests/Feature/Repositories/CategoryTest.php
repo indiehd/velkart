@@ -26,13 +26,13 @@ class CategoryTest extends RepositoryTestCase
 
         $updated = $this->getRepository()->update(
             $category->id,
-            ['name' => $category->name . ' new']
+            ['name' => $category->name.' new']
         );
 
         $this->assertTrue($updated, 'Category did NOT update');
         $this->assertDatabaseHas(
             $this->getRepository()->model()->getTable(),
-            ['name' => $category->name . ' new']
+            ['name' => $category->name.' new']
         );
     }
 

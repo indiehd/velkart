@@ -25,8 +25,8 @@ class CountryFactory extends Factory
             'name' => $this->faker->words(2, true),
             'code' => $this->faker->unique()->toUpper(
                 $this->faker->randomLetter
-                    . $this->faker->randomLetter
-                    . $this->faker->randomLetter
+                    .$this->faker->randomLetter
+                    .$this->faker->randomLetter
             ),
         ];
     }
