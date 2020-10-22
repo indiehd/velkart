@@ -3,8 +3,8 @@
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;
 
 class OrderRepositoryTest extends RepositoryTestCase
@@ -15,9 +15,9 @@ class OrderRepositoryTest extends RepositoryTestCase
     protected $product;
 
     /**
-     * @var CartRepositoryContract
+     * @var OrderStatusRepositoryContract
      */
-    protected $cart;
+    protected $orderStatus;
 
     public function setUp(): void
     {
@@ -26,7 +26,7 @@ class OrderRepositoryTest extends RepositoryTestCase
         $this->setRepository(resolve(OrderRepositoryContract::class));
 
         $this->product = resolve(ProductRepositoryContract::class);
-        $this->cart = resolve(CartRepositoryContract::class);
+        $this->orderStatus = resolve(OrderStatusRepositoryContract::class);
     }
 
     /** @test */
@@ -34,10 +34,10 @@ class OrderRepositoryTest extends RepositoryTestCase
     {
         $order = factory($this->getRepository()->modelClass())->create();
 
-        $cart = factory($this->cart->modelClass())->create();
+        $status = factory($this->orderStatus->modelClass())->create();
 
         $updates = [
-            'cart_id' => $cart->id,
+            'order_status_id' => $status->id,
         ];
 
         $updated = $this->getRepository()->update($order->id, $updates);
@@ -51,26 +51,17 @@ class OrderRepositoryTest extends RepositoryTestCase
     {
         $order = factory($this->getRepository()->modelClass())->create();
 
-        $products = factory($this->product->modelClass(), 2)->make();
+        $products = factory($this->product->modelClass(), 2)->create();
 
-        $order->products()->saveMany($products);
+        $products->each(function ($product) use ($order) {
+            $order->products()->attach($product->id, ['price' => $product->price]);
+        });
 
         $this->assertInstanceOf(Collection::class, $order->products);
 
         $this->assertInstanceOf(
             $this->product->modelClass(),
             $order->products->first()
-        );
-    }
-
-    /** @test */
-    public function itBelongsToShoppingCart()
-    {
-        $order = factory($this->getRepository()->modelClass())->create();
-
-        $this->assertInstanceOf(
-            $this->cart->modelClass(),
-            $order->cart
         );
     }
 }

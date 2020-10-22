@@ -1,13 +1,13 @@
 <?php
 
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 
 $order = resolve(OrderRepositoryContract::class);
-$cart = resolve(CartRepositoryContract::class);
+$orderStatus = resolve(OrderStatusRepositoryContract::class);
 
-$factory->define($order->modelClass(), function (Faker\Generator $faker) use ($cart) {
+$factory->define($order->modelClass(), function (Faker\Generator $faker) use ($orderStatus) {
     return [
-        'cart_id' => factory($cart->modelClass())->create()->id,
+        'order_status_id' => factory($orderStatus->modelClass())->create()->id,
     ];
 });
