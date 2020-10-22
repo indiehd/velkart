@@ -4,15 +4,23 @@ namespace IndieHD\Velkart\Models\Eloquent;
 
 use Gloudemans\Shoppingcart\CanBeBought;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use IndieHD\Velkart\Database\Factories\ProductFactory;
 
 class Product extends Model implements Buyable
 {
     use CanBeBought;
+    use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected static function newFactory()
+    {
+        return ProductFactory::new();
+    }
 
     /**
      * @return HasMany
