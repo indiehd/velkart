@@ -3,7 +3,6 @@
 namespace IndieHD\Velkart\Models\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Cart extends Model
 {
