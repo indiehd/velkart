@@ -1,16 +1,33 @@
 <?php
 
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
+namespace IndieHD\Velkart\Database\Factories;
 
-$country = resolve(CountryRepositoryContract::class);
+use Illuminate\Database\Eloquent\Factories\Factory;
+use IndieHD\Velkart\Models\Eloquent\Country;
 
-$factory->define($country->modelClass(), function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->words(2, true),
-        'code' => $faker->unique()->toUpper(
-            $faker->randomLetter
-            .$faker->randomLetter
-            .$faker->randomLetter
-        ),
-    ];
-});
+class CountryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Country::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->words(2, true),
+            'code' => $this->faker->unique()->toUpper(
+                $this->faker->randomLetter
+                    . $this->faker->randomLetter
+                    . $this->faker->randomLetter
+            ),
+        ];
+    }
+}

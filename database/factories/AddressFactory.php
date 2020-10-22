@@ -1,21 +1,40 @@
 <?php
 
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\AddressRepositoryContract;
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
+namespace IndieHD\Velkart\Database\Factories;
 
-$address = resolve(AddressRepositoryContract::class);
-$country = resolve(CountryRepositoryContract::class);
+use Illuminate\Database\Eloquent\Factories\Factory;
+use IndieHD\Velkart\Models\Eloquent\Address;
+use IndieHD\Velkart\Models\Eloquent\Country;
 
-$factory->define($address->modelClass(), function (Faker\Generator $faker) {
-    return [
-        'alias'      => $faker->randomElement(['Home', 'Work', 'School']),
-        'address_1'  => $faker->streetAddress,
-        'country_id' => 1,
-    ];
-});
+class AddressFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Address::class;
 
-$factory->state($address->modelClass(), 'withCountry', [
-    'country_id' => function () use ($country) {
-        return factory($country->modelClass())->create()->id;
-    },
-]);
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'alias'      => $this->faker->randomElement(['Home', 'Work', 'School']),
+            'address_1'  => $this->faker->streetAddress,
+            'country_id' => 1,
+        ];
+    }
+
+    public function withCountry()
+    {
+        return $this->state(function () {
+            return [
+                'country_id' => Country::factory()->create()->id,
+            ];
+        });
+    }
+}

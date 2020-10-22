@@ -1,18 +1,34 @@
 <?php
 
+namespace IndieHD\Velkart\Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
+use IndieHD\Velkart\Models\Eloquent\Cart;
 use Ramsey\Uuid\UuidFactoryInterface;
 
-$cartRepository = resolve(CartRepositoryContract::class);
-$uuidFactory = resolve(UuidFactoryInterface::class);
+class CartFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Cart::class;
 
-$factory->define($cartRepository->modelClass(), function (Faker\Generator $faker) use ($uuidFactory) {
-    $identifier = $uuidFactory->uuid4();
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $identifier = resolve(UuidFactoryInterface::class)->uuid4();
 
-    return [
-        'identifier' => $identifier->toString(),
-        'instance'   => 'default',
-        'content'    => serialize(new Collection()),
-    ];
-});
+        return [
+            'identifier' => $identifier->toString(),
+            'instance'   => 'default',
+            'content'    => serialize(new Collection()),
+        ];
+    }
+}
