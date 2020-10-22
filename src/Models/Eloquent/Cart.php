@@ -13,12 +13,4 @@ class Cart extends Model
     {
         parent::__construct($attributes);
     }
-
-    /**
-     * @return HasOne
-     */
-    public function order()
-    {
-        return $this->hasOne(Order::class);
-    }
 }

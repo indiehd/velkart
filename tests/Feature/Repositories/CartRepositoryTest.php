@@ -167,17 +167,4 @@ class CartRepositoryTest extends TestCase
             ['identifier' => $model->identifier]
         );
     }
-
-    /** @test */
-    public function itHasOneOrder()
-    {
-        $cart = factory($this->getRepository()->modelClass())->create();
-
-        $cart->order()->save(factory($this->order->modelClass())->make());
-
-        $this->assertInstanceOf(
-            $this->order->modelClass(),
-            $cart->order
-        );
-    }
 }

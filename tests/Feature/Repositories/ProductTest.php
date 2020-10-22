@@ -95,8 +95,9 @@ class ProductTest extends RepositoryTestCase
 
         $orders = factory($this->order->modelClass(), 2)->create();
 
-        $product->orders()->save($orders->shift());
-        $product->orders()->save($orders->shift());
+        $orders->each(function ($order) use ($product) {
+            $product->orders()->attach($order->id, ['price' => $product->price]);
+        });
 
         $this->assertInstanceOf(Collection::class, $product->orders);
 

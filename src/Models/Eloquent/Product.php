@@ -47,6 +47,7 @@ class Product extends Model implements Buyable
      */
     public function orders(): BelongsToMany
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)
+            ->withPivot('price');
     }
 }

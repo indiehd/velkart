@@ -15,14 +15,7 @@ class Order extends Model
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function cart(): BelongsTo
-    {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsToMany(Product::class)
+            ->withPivot('price');
     }
 }
