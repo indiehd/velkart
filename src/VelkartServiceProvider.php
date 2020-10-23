@@ -2,7 +2,6 @@
 
 namespace IndieHD\Velkart;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\ServiceProvider;
 use IndieHD\Velkart\Cart\CartItem;
 use IndieHD\Velkart\Contracts\Models\CartItemContract;

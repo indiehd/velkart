@@ -3,8 +3,8 @@
 namespace IndieHD\Velkart\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use IndieHD\Velkart\Models\Eloquent\Order;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
+use IndieHD\Velkart\Models\Eloquent\Order;
 
 class OrderFactory extends Factory
 {
