@@ -2,9 +2,11 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
+use Illuminate\Support\Collection;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;
+use IndieHD\Velkart\Models\Eloquent\Order;
 
 class OrderRepositoryTest extends RepositoryTestCase
 {
@@ -48,12 +50,14 @@ class OrderRepositoryTest extends RepositoryTestCase
     /** @test */
     public function itHasManyProducts()
     {
+        /** @var Order */
         $order = $this->factory()->create();
 
-        $products = $this->product->factory()->count(2)->make();
+        $products = $this->product->factory()->count(2)->create();
 
         $products->each(function ($product) use ($order) {
-            $order->products()->attach($product->id, ['price' => $product->price]);
+            $order->products()->attach($product, ['price' => $product->price]);
+            $order->save();
         });
 
         $this->assertInstanceOf(Collection::class, $order->products);
