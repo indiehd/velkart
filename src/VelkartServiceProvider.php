@@ -50,14 +50,6 @@ class VelkartServiceProvider extends ServiceProvider
 
     public function register()
     {
-        Factory::guessFactoryNamesUsing(function ($name) {
-            $modelName = (string) '\\IndieHD\\Velkart\\Database\\Factories\\' .
-                (class_basename($name)) .
-                'Factory';
-
-            return $modelName::new();
-        });
-
         $this->app->bind(ProductRepositoryContract::class, ProductRepository::class);
         $this->app->bind(ProductImageRepositoryContract::class, ProductImageRepository::class);
         $this->app->bind(CategoryRepositoryContract::class, CategoryRepository::class);
