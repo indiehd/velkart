@@ -5,7 +5,7 @@ namespace IndieHD\Velkart\Contracts\Repositories\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use IndieHD\Velkart\Models\Eloquent\Cart;
 
-interface CartRepositoryContract extends FactoryProvider
+interface CartRepositoryContract
 {
     /**
      * Get the underlying model's class name.

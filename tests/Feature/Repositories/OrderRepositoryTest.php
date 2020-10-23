@@ -35,7 +35,7 @@ class OrderRepositoryTest extends RepositoryTestCase
     {
         $order = $this->factory()->create();
 
-        $status = $this->orderStatus->factory()->create();
+        $status = $this->factory($this->orderStatus)->create();
 
         $updates = [
             'order_status_id' => $status->id,
@@ -53,7 +53,7 @@ class OrderRepositoryTest extends RepositoryTestCase
         /** @var Order */
         $order = $this->factory()->create();
 
-        $products = $this->product->factory()->count(2)->create();
+        $products = $this->factory($this->product)->count(2)->create();
 
         $products->each(function ($product) use ($order) {
             $order->products()->attach($product, ['price' => $product->price]);

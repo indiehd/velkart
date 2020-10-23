@@ -33,7 +33,9 @@ class AddressFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'country_id' => resolve(CountryRepositoryContract::class)->factory()->create()->id,
+                'country_id' => static::factoryForModel(
+                    resolve(CountryRepositoryContract::class)->modelClass()
+                ),
             ];
         });
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
@@ -53,7 +54,7 @@ class CartTest extends TestCase
     /** @test */
     public function itCanListManyCartsWithItems()
     {
-        $carts = $this->cart->factory()->count(2)->create();
+        $carts = Factory::factoryForModel($this->cart->modelClass())->count(2)->create();
 
         $cartItems = new Collection();
 
@@ -95,7 +96,7 @@ class CartTest extends TestCase
     /** @test */
     public function itCanListCartByIdentifier()
     {
-        $cart = $this->cart->factory()->create();
+        $cart = Factory::factoryForModel($this->cart->modelClass())->create();
 
         // The cart will be empty (i.e., it will have no items), and hence the
         // empty JSON fragment.
@@ -115,7 +116,7 @@ class CartTest extends TestCase
     /** @test */
     public function itCanDestroy()
     {
-        $cart = $this->cart->factory()->create();
+        $cart = Factory::factoryForModel($this->cart->modelClass())->create();
 
         $this->deleteJson(
             route('cart.delete', ['identifier' => $cart->identifier])

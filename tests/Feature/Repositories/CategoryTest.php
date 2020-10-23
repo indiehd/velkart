@@ -26,13 +26,13 @@ class CategoryTest extends RepositoryTestCase
 
         $updated = $this->getRepository()->update(
             $category->id,
-            ['name' => $category->name.' new']
+            ['name' => $category->name . ' new']
         );
 
         $this->assertTrue($updated, 'Category did NOT update');
         $this->assertDatabaseHas(
             $this->getRepository()->model()->getTable(),
-            ['name' => $category->name.' new']
+            ['name' => $category->name . ' new']
         );
     }
 
@@ -40,7 +40,7 @@ class CategoryTest extends RepositoryTestCase
     public function itHasManyProducts()
     {
         $category = $this->create();
-        $products = $this->productRepository->factory()->count(3)->make();
+        $products = $this->factory($this->productRepository)->count(3)->make();
 
         $category->products()->saveMany($products);
 

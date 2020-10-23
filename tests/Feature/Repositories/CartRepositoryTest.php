@@ -2,6 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
@@ -65,12 +66,12 @@ class CartRepositoryTest extends TestCase
 
     protected function create(): object
     {
-        return $this->getRepository()->factory()->create();
+        return $this->factory()->create();
     }
 
     protected function createMany(int $count = 3): iterable
     {
-        return $this->getRepository()->factory()->count($count)->create();
+        return $this->factory()->count($count)->create();
     }
 
     /** @test */
@@ -166,5 +167,12 @@ class CartRepositoryTest extends TestCase
             $this->getRepository()->model()->getTable(),
             ['identifier' => $model->identifier]
         );
+    }
+
+    protected function factory()
+    {
+        $repo = $this->getRepository();
+
+        return Factory::factoryForModel($repo->modelClass());
     }
 }

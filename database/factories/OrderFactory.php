@@ -22,10 +22,10 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-        $orderStatus = resolve(OrderStatusRepositoryContract::class);
+        $orderStatus = static::factoryForModel(resolve(OrderStatusRepositoryContract::class)->modelClass());
 
         return [
-            'order_status_id' => $orderStatus->factory()->create()->id,
+            'order_status_id' => $orderStatus,
         ];
     }
 }

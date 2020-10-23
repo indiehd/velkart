@@ -2,6 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\BaseRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
@@ -43,9 +44,11 @@ abstract class RepositoryTestCase extends TestCase
         return $this->factory()->count($count)->create();
     }
 
-    protected function factory()
+    protected function factory(BaseRepositoryContract $repo = null)
     {
-        return $this->getRepository()->factory();
+        $repo = $repo ?: $this->getRepository();
+
+        return Factory::factoryForModel($repo->modelClass());
     }
 
     /**

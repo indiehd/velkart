@@ -2,6 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use IndieHD\Velkart\Contracts\BaseRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Session\CartSessionRepositoryContract;

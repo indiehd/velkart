@@ -22,10 +22,12 @@ class AttributeValueFactory extends Factory
      */
     public function definition()
     {
-        $attribute = resolve(AttributeRepositoryContract::class)->factory()->create();
+        $attributeFactory = static::factoryForModel(
+            resolve(AttributeRepositoryContract::class)->modelClass()
+        );
 
         return [
-            'attribute_id' => $attribute->id,
+            'attribute_id' => $attributeFactory,
             'value'        => $this->faker->words($this->faker->numberBetween(1, 3), true),
         ];
     }

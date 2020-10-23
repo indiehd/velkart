@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Cart as CartModel;
-use IndieHD\Velkart\Traits\ProvidesFactory;
 
 class CartRepository implements CartRepositoryContract
 {
-    use ProvidesFactory;
-
     /**
      * @var CartModel
      */

@@ -23,12 +23,12 @@ class ProductImageFactory extends Factory
      */
     public function definition()
     {
-        $product = resolve(ProductRepositoryContract::class)->factory()->create();
+        $product = static::factoryForModel(resolve(ProductRepositoryContract::class)->modelClass());
 
-        $file = UploadedFile::fake()->image($this->faker->word.'.jpg', 600, 600);
+        $file = UploadedFile::fake()->image($this->faker->word . '.jpg', 600, 600);
 
         return [
-            'product_id' => $product->id,
+            'product_id' => $product,
             'disk'       => 'public',
             'path'       => $file->store('products', ['disk' => 'public']),
         ];
