@@ -43,17 +43,17 @@ class CartTest extends TestCase
             route('cart.store'),
             ['identifier' => 'foo']
         )
-        ->assertStatus(200)
-        ->assertJsonFragment([
-            'identifier' => 'foo',
-            'content'    => [],
-        ]);
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'identifier' => 'foo',
+                'content'    => [],
+            ]);
     }
 
     /** @test */
     public function itCanListManyCartsWithItems()
     {
-        $carts = factory($this->cart->modelClass(), 2)->create();
+        $carts = $this->cart->factory()->count(2)->create();
 
         $cartItems = new Collection();
 
@@ -95,7 +95,7 @@ class CartTest extends TestCase
     /** @test */
     public function itCanListCartByIdentifier()
     {
-        $cart = factory($this->cart->modelClass())->create();
+        $cart = $this->cart->factory()->create();
 
         // The cart will be empty (i.e., it will have no items), and hence the
         // empty JSON fragment.
@@ -103,23 +103,23 @@ class CartTest extends TestCase
         $this->getJson(
             route('cart.show', ['identifier' => $cart->identifier])
         )
-        ->assertStatus(200)
-        ->assertJsonFragment([
-            'identifier' => $cart->identifier,
-        ])
-        ->assertJsonFragment([
-            'content' => [],
-        ]);
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'identifier' => $cart->identifier,
+            ])
+            ->assertJsonFragment([
+                'content' => [],
+            ]);
     }
 
     /** @test */
     public function itCanDestroy()
     {
-        $cart = factory($this->cart->modelClass())->create();
+        $cart = $this->cart->factory()->create();
 
         $this->deleteJson(
             route('cart.delete', ['identifier' => $cart->identifier])
         )
-        ->assertStatus(200);
+            ->assertStatus(200);
     }
 }

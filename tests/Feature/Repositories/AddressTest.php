@@ -17,7 +17,7 @@ class AddressTest extends RepositoryTestCase
     {
         if ($params === null) {
             $params = $this->getRepository()
-                ->modelClass()::factory()
+                ->factory()
                 ->withCountry()
                 ->make()
                 ->toArray();
@@ -29,7 +29,7 @@ class AddressTest extends RepositoryTestCase
     protected function createMany(int $count = 3): iterable
     {
         return $this->getRepository()
-            ->modelClass()::factory()
+            ->factory()
             ->count(3)
             ->withCountry()
             ->create();

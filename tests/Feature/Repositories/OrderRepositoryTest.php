@@ -2,7 +2,6 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;

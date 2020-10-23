@@ -40,7 +40,7 @@ class CategoryTest extends RepositoryTestCase
     public function itHasManyProducts()
     {
         $category = $this->create();
-        $products = $this->productRepository->modelClass()::factory()->count(3)->make();
+        $products = $this->productRepository->factory()->count(3)->make();
 
         $category->products()->saveMany($products);
 

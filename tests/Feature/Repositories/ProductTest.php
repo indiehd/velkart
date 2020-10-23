@@ -44,7 +44,7 @@ class ProductTest extends RepositoryTestCase
     {
         $product = $this->create();
 
-        $images = $this->productImage->modelClass()::factory()->count(2)->make();
+        $images = $this->productImage->factory()->count(2)->make();
 
         $product->images()->saveMany($images);
 
@@ -76,7 +76,7 @@ class ProductTest extends RepositoryTestCase
     {
         $product = $this->create();
 
-        $attributes = $this->attribute->modelClass()::factory()->count(2)->create();
+        $attributes = $this->attribute->factory()->count(2)->create();
 
         $product->attributes()->saveMany($attributes);
 
@@ -93,7 +93,7 @@ class ProductTest extends RepositoryTestCase
     {
         $product = $this->create();
 
-        $orders = $this->order->modelClass()::factory()->count(2)->create();
+        $orders = $this->order->factory()->count(2)->create();
 
         $orders->each(function ($order) use ($product) {
             $product->orders()->attach($order->id, ['price' => $product->price]);
