@@ -57,7 +57,6 @@ class OrderRepositoryTest extends RepositoryTestCase
 
         $products->each(function ($product) use ($order) {
             $order->products()->attach($product, ['price' => $product->price]);
-            $order->save();
         });
 
         $this->assertInstanceOf(Collection::class, $order->products);
