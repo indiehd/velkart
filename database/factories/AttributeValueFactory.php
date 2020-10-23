@@ -3,7 +3,7 @@
 namespace IndieHD\Velkart\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use IndieHD\Velkart\Models\Eloquent\Attribute;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\AttributeValue;
 
 class AttributeValueFactory extends Factory
@@ -22,7 +22,7 @@ class AttributeValueFactory extends Factory
      */
     public function definition()
     {
-        $attribute = Attribute::factory()->create();
+        $attribute = resolve(AttributeRepositoryContract::class)->factory()->create();
 
         return [
             'attribute_id' => $attribute->id,

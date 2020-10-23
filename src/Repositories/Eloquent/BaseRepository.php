@@ -2,11 +2,15 @@
 
 namespace IndieHD\Velkart\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use IndieHD\Velkart\Traits\ProvidesFactory;
 
 abstract class BaseRepository
 {
+    use ProvidesFactory;
+
     /**
      * @return Model
      */

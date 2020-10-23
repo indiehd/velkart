@@ -2,7 +2,7 @@
 
 namespace IndieHD\Velkart\Contracts\Repositories\Eloquent;
 
-interface BaseRepositoryContract
+interface BaseRepositoryContract extends FactoryProvider
 {
     public function list(string $order = 'id', string $sort = 'desc', array $columns = ['*']): iterable;
 

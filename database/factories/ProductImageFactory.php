@@ -4,7 +4,7 @@ namespace IndieHD\Velkart\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
-use IndieHD\Velkart\Models\Eloquent\Product;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\ProductRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\ProductImage;
 
 class ProductImageFactory extends Factory
@@ -23,7 +23,7 @@ class ProductImageFactory extends Factory
      */
     public function definition()
     {
-        $product = Product::factory()->create();
+        $product = resolve(ProductRepositoryContract::class)->factory()->create();
 
         $file = UploadedFile::fake()->image($this->faker->word.'.jpg', 600, 600);
 

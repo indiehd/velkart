@@ -3,8 +3,8 @@
 namespace IndieHD\Velkart\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\CountryRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\Address;
-use IndieHD\Velkart\Models\Eloquent\Country;
 
 class AddressFactory extends Factory
 {
@@ -33,7 +33,7 @@ class AddressFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'country_id' => Country::factory()->create()->id,
+                'country_id' => resolve(CountryRepositoryContract::class)->factory()->create()->id,
             ];
         });
     }
