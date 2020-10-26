@@ -2,6 +2,7 @@
 
 namespace IndieHD\Velkart\Tests\Feature\Repositories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\BaseRepositoryContract;
 use IndieHD\Velkart\Tests\TestCase;
@@ -32,7 +33,7 @@ abstract class RepositoryTestCase extends TestCase
     protected function create($params = null): object
     {
         if ($params === null) {
-            $params = factory($this->getRepository()->modelClass())->make()->toArray();
+            $params = $this->factory()->make()->toArray();
         }
 
         return $this->getRepository()->create($params);
@@ -40,7 +41,14 @@ abstract class RepositoryTestCase extends TestCase
 
     protected function createMany(int $count = 3): iterable
     {
-        return factory($this->getRepository()->modelClass(), $count)->create();
+        return $this->factory()->count($count)->create();
+    }
+
+    protected function factory(BaseRepositoryContract $repo = null)
+    {
+        $repo = $repo ?: $this->getRepository();
+
+        return Factory::factoryForModel($repo->modelClass());
     }
 
     /**

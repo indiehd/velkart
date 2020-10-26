@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
 use IndieHD\Velkart\Contracts\Repositories\Eloquent\CartRepositoryContract;
 use IndieHD\Velkart\Contracts\Repositories\Session\CartItemRepositoryContract;
@@ -43,17 +44,17 @@ class CartTest extends TestCase
             route('cart.store'),
             ['identifier' => 'foo']
         )
-        ->assertStatus(200)
-        ->assertJsonFragment([
-            'identifier' => 'foo',
-            'content'    => [],
-        ]);
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'identifier' => 'foo',
+                'content'    => [],
+            ]);
     }
 
     /** @test */
     public function itCanListManyCartsWithItems()
     {
-        $carts = factory($this->cart->modelClass(), 2)->create();
+        $carts = Factory::factoryForModel($this->cart->modelClass())->count(2)->create();
 
         $cartItems = new Collection();
 
@@ -95,7 +96,7 @@ class CartTest extends TestCase
     /** @test */
     public function itCanListCartByIdentifier()
     {
-        $cart = factory($this->cart->modelClass())->create();
+        $cart = Factory::factoryForModel($this->cart->modelClass())->create();
 
         // The cart will be empty (i.e., it will have no items), and hence the
         // empty JSON fragment.
@@ -103,23 +104,23 @@ class CartTest extends TestCase
         $this->getJson(
             route('cart.show', ['identifier' => $cart->identifier])
         )
-        ->assertStatus(200)
-        ->assertJsonFragment([
-            'identifier' => $cart->identifier,
-        ])
-        ->assertJsonFragment([
-            'content' => [],
-        ]);
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'identifier' => $cart->identifier,
+            ])
+            ->assertJsonFragment([
+                'content' => [],
+            ]);
     }
 
     /** @test */
     public function itCanDestroy()
     {
-        $cart = factory($this->cart->modelClass())->create();
+        $cart = Factory::factoryForModel($this->cart->modelClass())->create();
 
         $this->deleteJson(
             route('cart.delete', ['identifier' => $cart->identifier])
         )
-        ->assertStatus(200);
+            ->assertStatus(200);
     }
 }

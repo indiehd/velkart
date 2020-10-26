@@ -1,13 +1,34 @@
 <?php
 
-use IndieHD\Velkart\Models\Eloquent\Attribute;
+namespace IndieHD\Velkart\Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use IndieHD\Velkart\Contracts\Repositories\Eloquent\AttributeRepositoryContract;
 use IndieHD\Velkart\Models\Eloquent\AttributeValue;
 
-$factory->define(AttributeValue::class, function (Faker\Generator $faker) {
-    $attribute = factory(Attribute::class)->create();
+class AttributeValueFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = AttributeValue::class;
 
-    return [
-        'attribute_id' => $attribute->id,
-        'value'        => $faker->words($faker->numberBetween(1, 3), true),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $attributeFactory = static::factoryForModel(
+            resolve(AttributeRepositoryContract::class)->modelClass()
+        );
+
+        return [
+            'attribute_id' => $attributeFactory,
+            'value'        => $this->faker->words($this->faker->numberBetween(1, 3), true),
+        ];
+    }
+}

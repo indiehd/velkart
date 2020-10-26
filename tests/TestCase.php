@@ -3,6 +3,7 @@
 namespace IndieHD\Velkart\Tests;
 
 use Faker\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory as FactoriesFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use IndieHD\Velkart\VelkartServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -22,7 +23,13 @@ abstract class TestCase extends OrchestraTestCase
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/../database/factories');
+        FactoriesFactory::guessFactoryNamesUsing(function ($name) {
+            $modelName = (string) '\\IndieHD\\Velkart\\Database\\Factories\\'.
+                (class_basename($name)).
+                'Factory';
+
+            return $modelName::new();
+        });
 
         $this->faker = Factory::create();
         $this->session = $this->app->make('session');

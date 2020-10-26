@@ -1,11 +1,28 @@
 <?php
 
-use IndieHD\Velkart\Contracts\Repositories\Eloquent\OrderStatusRepositoryContract;
+namespace IndieHD\Velkart\Database\Factories;
 
-$orderStatus = resolve(OrderStatusRepositoryContract::class);
+use Illuminate\Database\Eloquent\Factories\Factory;
+use IndieHD\Velkart\Models\Eloquent\OrderStatus;
 
-$factory->define($orderStatus->modelClass(), function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->word,
-    ];
-});
+class OrderStatusFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = OrderStatus::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->word,
+        ];
+    }
+}
