@@ -24,11 +24,9 @@ abstract class TestCase extends OrchestraTestCase
         parent::setUp();
 
         FactoriesFactory::guessFactoryNamesUsing(function ($name) {
-            $modelName = (string) '\\IndieHD\\Velkart\\Database\\Factories\\'.
-                (class_basename($name)).
+            return (string) '\\IndieHD\\Velkart\\Database\\Factories\\' .
+                (class_basename($name)) .
                 'Factory';
-
-            return $modelName::new();
         });
 
         $this->faker = Factory::create();
