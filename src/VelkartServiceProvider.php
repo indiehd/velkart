@@ -37,7 +37,6 @@ class VelkartServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadFactoriesFrom(__DIR__.'/../database/factories');
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishes([
