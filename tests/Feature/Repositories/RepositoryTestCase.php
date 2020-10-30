@@ -59,9 +59,10 @@ abstract class RepositoryTestCase extends TestCase
     /** @test */
     public function itCanCreate()
     {
-        $model = $this->create();
-
-        $this->assertNotNull($model, 'Model IS null');
+        $this->assertInstanceOf(
+            $this->getRepository()->modelClass(),
+            $this->create()
+        );
     }
 
     /** @test */
@@ -75,7 +76,10 @@ abstract class RepositoryTestCase extends TestCase
     {
         $model = $this->create();
 
-        $this->assertNotNull($this->getRepository()->findById($model->id));
+        $this->assertInstanceOf(
+            $this->getRepository()->modelClass(),
+            $this->getRepository()->findById($model->id)
+        );
     }
 
     /** @test */
