@@ -1,6 +1,6 @@
 <?php
 
-namespace IndieHD\Velkart\Database\Seeds;
+namespace IndieHD\Velkart\Database\Seeders;
 
 use Illuminate\Database\Seeder as BaseSeeder;
 use IndieHD\Velkart\Models\Eloquent\Country;
