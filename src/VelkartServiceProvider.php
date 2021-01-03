@@ -2,6 +2,7 @@
 
 namespace IndieHD\Velkart;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\ServiceProvider;
 use IndieHD\Velkart\Cart\CartItem;
 use IndieHD\Velkart\Contracts\Models\CartItemContract;
@@ -36,6 +37,12 @@ class VelkartServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        Factory::guessFactoryNamesUsing(function ($name) {
+            return (string) '\\IndieHD\\Velkart\\Database\\Factories\\'.
+                (class_basename($name)).
+                'Factory';
+        });
+
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
