@@ -1,4 +1,6 @@
 language: php
+dist: xenial
+os: linux
 
 php:
   - '7.3'
@@ -6,8 +8,6 @@ php:
 
 addons:
   mariadb: '10.3'
-
-sudo: false
 
 before_script:
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction
